@@ -452,8 +452,9 @@
   integrity sha512-CmBKiL6NNo/OqgmMn95Fk9Whlp2mtvIv+KNpQKN2F4SjvrEesubTRWGYSg+BnWZOnlCaSTU1sMpsBOzgbYhnsA==
 
 "@uhuu/components@github:uhuuio/uhuu-components":
-  version "0.1.0"
-  resolved "git+ssh://git@github.com/uhuuio/uhuu-components.git#f7b35cfaf3b1571c005e7f659edc9b2864c9955b"
+  version "0.1.1"
+  resolved "git+ssh://git@github.com/uhuuio/uhuu-components.git"
+  integrity sha512-58Oc1mbk2gq6DV0t+rx3cSGYD6+lhks100T0NuPzJ6lhtxTvGQ8FMPG22iLu8Jf7hY9U0nJayqWrv6rPuDkMug==
 
 "@ungap/structured-clone@^1.0.0":
   version "1.2.0"
