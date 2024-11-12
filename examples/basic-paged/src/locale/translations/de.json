@@ -1,0 +1,17 @@
+{
+      "price": "Verkaufspreis",      
+      "Die wichtigsten Fakten im Überblick": "Die wichtigsten Fakten im Überblick",
+      "contact-message": "Wir freuen uns, Ihnen die Immobilie zu zeigen. \n Kontaktieren Sie uns, wir sind für Sie da.",
+      "pba__address_pb__c": "Adresse",
+      "wp_areagerman__c" : "Lage",
+      "wp_textinternetgerman__c" : "Beschreibung",
+      "pba_dachfields__rooms__c" : "Anzahl Zimmer",
+      "pba__bedrooms_pb__c" : "Anzahl Schlafzimmer",
+      "pba__lotsize_pb__c" : "Grundstück",
+      "pba_dachfields__living_space_sqm__c" : "Wohnfläche",
+      "wp_ancillaryroomsqm__c" : "Nebenraumfläche",
+      "wp_specialsinternetgerman__c" : "Besonderes",
+      "wp_moveindategerman__c" : "Bezugstermin",
+      "wp_parkinginternetgerman__c" : "Parkieren",
+      "pba__yearbuilt_pb__c" : "Baujahr"
+    }

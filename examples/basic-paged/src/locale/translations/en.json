@@ -1,0 +1,17 @@
+{      
+      "price": "Retail Price",
+      "Die wichtigsten Fakten im Überblick": "The most important facts: an overview",
+      "contact-message": "We look forward to showing you the property. \n Contact us, we are here for you.",
+      "pba__address_pb__c": "Adress",
+      "wp_areagerman__c": "Location",
+      "wp_textinternetgerman__c": "Description",
+      "pba_dachfields__rooms__c": "Number of Rooms",
+      "pba__bedrooms_pb__c": "Number of bedrooms",
+      "pba__lotsize_pb__c": "Plot",
+      "pba_dachfields__living_space_sqm__c": "Living Space",
+      "wp_ancillaryroomsqm__c": "Ancillary room sqm",
+      "wp_specialsinternetgerman__c": "Special",
+      "wp_moveindategerman__c": "Move-in date",
+      "wp_parkinginternetgerman__c": "Parking",
+      "pba__yearbuilt_pb__c": "Construction year"
+}

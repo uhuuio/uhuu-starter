@@ -1,0 +1,19 @@
+/* Import external dependencies first  */
+@import url('https://fonts.googleapis.com/css?family=Open+Sans:400,700&display=swap');
+
+/* Optional tailwind set up */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@media screen {
+  [data-uhuu] { @apply cursor-pointer outline outline-transparent outline-dashed hover:outline-pink-600; }  
+}
+
+.A4 { @apply h-[297mm] w-[210mm]; }
+
+@media screen {
+    .A4 {
+        @apply shadow mx-auto bg-white;
+    }
+}

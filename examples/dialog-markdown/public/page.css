@@ -1,0 +1,16 @@
+@page { 
+  size: A4; 
+  bleed: 3mm;
+  margin:9mm; 
+}
+
+.page-break-inside-avoid {
+  page-break-inside: avoid;
+  break-inside: avoid-page;
+}
+
+.page-break-after {
+  page-break-after: always;
+  break-inside: avoid-page;
+  break-after: page;
+}

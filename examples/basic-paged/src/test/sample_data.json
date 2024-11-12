@@ -1,0 +1,184 @@
+{
+  "id": "a093W000004NZwdQAG",
+  "component": "text",
+  "language": "de",
+  "message": "Wir freuen uns, Ihnen die Immobilie zu zeigen. Kontaktieren Sie uns, wir sind für Sie da.",
+  "amountFloorSections": "4",
+  "listing": {
+    "detail": {
+      "wp_listingreferencenumber__c": "L11.351",
+      "wp_propertyreferencenumber__c": "90.16.461",
+      "name": "L11.351, Zürich, Bertastrasse 15",
+      "pba__address_pb__c": "Bertastrasse 15",
+      "pba__postalcode_pb__c": "8003",
+      "pba__city_pb__c": "Zürich",
+      "pba__latitude_pb__c": "47.375013700",
+      "pba__longitude_pb__c": "8.515848500"
+    },
+    "general": {
+      "wp_propertyinternetgerman__c": "Mehrfamilienhaus mit angebauter Maisonnette-Wohnung",
+      "wp_propertyinternetenglish__c": "Apartment building with attached maisonette apartment",
+      "wp_areagerman__c": "Leicht erhöhte, gut besonnte Wohnlage mit Seesicht; Bushaltestelle, Schule,\nSee und Strandbad in kurzer Gehdistanz; schnelle S-Bahnverbindung nach Zürich;\nnahe Grünzonen mit Landwirtschaft und Wald als Naherholungsgebiete; gutes\nSport- und Freizeitangebot.",
+      "wp_areaenglish__c": "Area written in english text",
+      "wp_parkinginternetgerman__c": "Gute Parkmöglichkeiten",
+      "wp_parkinginternetenglish__c": "Good parking",
+      "wp_specialsinternetgerman__c": "Die Liegenschaft kann einzeln oder im Portfolio mit vier anderen Liegenschaften erworben werden.",
+      "wp_specialsinternetenglish__c": "The property can be purchased individually or in a portfolio with four other properties.",
+      "wp_moveindategerman__c": "Nach Vereinbarung",
+      "wp_moveindateenglish__c": "To be discussed",
+      "wp_ancillaryroomsqm__c": 24
+    },
+    "price": {
+      "wp_pricetypeinternetenglish__c": "Retail Price in CHF",
+      "wp_pricetypeinternetgerman__c": "Verkaufspreis in CHF",
+      "pba__listingprice_pb__c": 14000000,
+      "wp_sellingpriceminimum__c": 14000000
+    },
+    "marketing": {
+      "wp_headlineinternetgerman__c": "Luxus pur mit viel Privacy",
+      "wp_headlineinternetenglish__c": "Luxus pur mit viel Privacy",
+      "wp_textinternetgerman__c": "Das einseitig angebaute Einfamilienhaus unter-teilt sich in 6.5 Zimmer auf einem gelungenenLayout mit ca. 192 m² Wohnfläche. Die Architek- tur aus dem Jahr 2000 besticht mit einem zeit- los-modernen Baustil, der schlichte Materialien wie Sichtbackstein und Gussbetonböden ge- konnt kombiniert mit optimaler Ausnutzung der Lichtquellen und einem wohnlichen Ausbau mit Buchenparkettböden, komfortabler Ausstattung und praktischen Einbauten. ",
+      "wp_textinternetenglish__c": "The property is well maintained and very charming with fountain and bench in front the property. Spread over three residential floors\r\nA total of nine apartments, six of which are 2-room apartments, two are 3.5-room apartments and a 3-room apartment. All Apartments are currently rented.\r\nThe condition is good and well maintained. It must\r\nin the medium term with a large-scale restructuring be counted. It also exists the potential rents prevailing\r\nadjust market rents.\r\nThe location in a traffic-calmed residential area\r\nimpresses with its quietness and short distances.\r\nA soccer field is next door, directly adjacent there is also a recreation zone and the Eulach.\r\nAn attractive investment, its potential can be redeemed even better. The property can be sold individually or in a portfolio acquired with four other properties will."
+    },
+    "contact": {
+      "photo_default": "https://platform.uhuu.io/common/samples/realestate/avatar-1.jpeg",
+      "pba__listing_agent_salutation__c": "Frau",
+      "pba__listing_agent_firstname__c": "Eva",
+      "pba__listing_agent_lastname__c": "Caldwell",
+      "pba__listing_agent_phone__c": "+41 44 392 49 88",
+      "wp_emaildirect__c": "eva.caldwell@uhuu.io.invalid"
+    },    
+    "media": {
+      "images": [
+        {
+          "title": "UHUU - Wohnzimmer 01.png",
+          "filename": "UHU - Wohnzimmer.png",
+          "tags": "Bild",
+          "mimetype": "image/png",
+          "url": "https://platform.uhuu.io/common/samples/realestate/property/uhuu-1.jpeg"
+        },
+        {
+          "title": "UHUU - Aussenansicht 03.png",
+          "filename": "UHUU - Aussenansicht 03.png",
+          "tags": "Bild",
+          "mimetype": "image/png",
+          "url": "https://platform.uhuu.io/common/samples/realestate/property/uhuu-2.jpeg"
+        },
+        {
+          "title": "UHUU - Badezimmer mit Bad.png",
+          "filename": "UHUU - Badezimmer mit Bad.png",
+          "tags": "Bild",
+          "mimetype": "image/png",
+          "url": "https://platform.uhuu.io/common/samples/realestate/property/uhuu-3.jpeg"
+        },
+        {
+          "title": "UHUU - Badezimmer mit Dusche.png",
+          "filename": "UHUU - Badezimmer mit Dusche.png",
+          "tags": "Bild",
+          "mimetype": "image/png",
+          "url": "https://platform.uhuu.io/common/samples/realestate/property/uhuu-4.jpeg"
+        },
+        {
+          "title": "UHUU - Bürozimmer.png",
+          "filename": "UHUU - Bürozimmer.png",
+          "tags": "Bild",
+          "mimetype": "image/png",
+          "url": "https://platform.uhuu.io/common/samples/realestate/property/uhuu-5.jpeg"
+        },
+        {
+          "title": "UHUU - Küche und Essbereich 2.png",
+          "filename": "UHUU - Küche und Essbereich 2.png",
+          "tags": "Bild",
+          "mimetype": "image/png",
+          "url": "https://platform.uhuu.io/common/samples/realestate/property/uhuu-6.jpeg"
+        },
+        {
+          "title": "UHUU - Schlafzimmer 01.png",
+          "filename": "UHUU - Schlafzimmer 1.png",
+          "tags": "Bild",
+          "mimetype": "image/png",
+          "url": "https://platform.uhuu.io/common/samples/realestate/property/uhuu-7.jpeg"
+        },
+        {
+          "title": "UHUU - Schlafzimmer 02.png",
+          "filename": "UHUU - Schlafzimmer 2.png",
+          "tags": "Bild",
+          "mimetype": "image/png",
+          "url": "https://platform.uhuu.io/common/samples/realestate/property/uhuu-8.jpeg"
+        },
+        {
+          "title": "UHUU - Schlafzimmer 03.png",
+          "filename": "UHUU - Schlafzimmer 3.png",
+          "tags": "Bild",
+          "mimetype": "image/png",
+          "url": "https://platform.uhuu.io/common/samples/realestate/property/uhuu-9.jpeg"
+        },
+        {
+          "title": "UHUU - Schlafzimmer 04.png",
+          "filename": "UHUU - Schlafzimmer 4.png",
+          "tags": "Bild",
+          "mimetype": "image/png",
+          "url": "https://platform.uhuu.io/common/samples/realestate/property/uhuu-10.jpeg"
+        },
+        {
+          "title": "UHUU - Terrasse.png",
+          "filename": "UHUU - Terrasse.png",
+          "tags": "Bild",
+          "mimetype": "image/png",
+          "url": "https://platform.uhuu.io/common/samples/realestate/property/uhuu-11.jpeg"
+        },
+        {
+          "title": "UHUU - Wohnzimmer 02.png",
+          "filename": "UHUU - Wohnzimmer 02.png",
+          "tags": "Bild",
+          "mimetype": "image/png",
+          "url": "https://platform.uhuu.io/common/samples/realestate/property/uhuu-12.jpeg"
+        },
+        {
+          "title": "UHUU - Aussenansicht 02.png",
+          "filename": "UHUU - Aussenansicht 02.png",
+          "tags": "Bild",
+          "mimetype": "image/png",
+          "url": "https://platform.uhuu.io/common/samples/realestate/property/uhuu-13.jpeg"
+        },
+        {
+          "title": "UHUU - Küche und Essbereich 01.png",
+          "filename": "UHUU - Küche und Essbereich.png",
+          "tags": "Bild",
+          "mimetype": "image/png",
+          "url": "https://platform.uhuu.io/common/samples/realestate/property/uhuu-14.jpeg"
+        },
+        {
+          "title": "Grundriss",
+          "filename": "Grundriss_EG_sample.jpg",
+          "tags": "Grundriss",
+          "mimetype": "image/jpeg",
+          "url": "https://platform.uhuu.io/common/samples/realestate/property/uhuu-15.jpeg"
+        },
+        {
+          "title": "Grundriss",
+          "filename": "Grundriss_OG_sample.jpg",
+          "tags": "Grundriss",
+          "mimetype": "image/jpeg",
+          "url": "https://platform.uhuu.io/common/samples/realestate/property/uhuu-16.jpeg"
+        },
+        {
+          "title": "Grundriss_DG.jpg",
+          "filename": "Grundriss_dach_sample.jpg",
+          "tags": "Grundriss",
+          "mimetype": "image/jpeg",
+          "url": "https://platform.uhuu.io/common/samples/realestate/property/uhuu-17.jpeg"
+        },
+        {
+          "title": "UHUU - Aussenansicht 01.png",
+          "filename": "UHUU - Aussenansicht.png",
+          "tags": "Hauptbild",
+          "mimetype": "image/png",
+          "url": "https://platform.uhuu.io/common/samples/realestate/property/uhuu-19.jpeg"
+        }
+      ],
+      "videos": [],
+      "documents": []
+    }
+  }
+}

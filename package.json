@@ -1,0 +1,43 @@
+{
+  "name": "uhuu-starter-monorepo",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Uhuu Examples Monorepo for Vite Displays Using Lerna",
+  "scripts": {
+    "dev:all": "lerna run dev",
+    "dev": "lerna run dev --scope",
+    "dev:secure": "lerna run dev:secure --scope",
+    "uhuu:all": "lerna run uhuu",
+    "uhuu": "lerna run uhuu --scope",
+    "build:all": "lerna run build",
+    "build": "lerna run build --scope"
+  },
+  "devDependencies": {
+    "@tailwindcss/typography": "^0.5.13",
+    "@types/react": "^18.0.26",
+    "@types/react-dom": "^18.0.9",
+    "@vitejs/plugin-react": "^4.2.0",
+    "autoprefixer": "^10.4.13",
+    "concurrently": "^7.2.1",
+    "currency.js": "^2.0.4",
+    "dayjs": "^1.11.2",
+    "i18next": "^21.8.10",
+    "lerna": "^8.0.0",
+    "lodash": "^4.17.21",
+    "@uhuu/components": "github:uhuuio/uhuu-components",
+    "postcss": "^8.4.37",
+    "qrcode.react": "^3.1.0",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "react-i18next": "^11.17.2",
+    "react-markdown": "^9.0.1",
+    "remark-gfm": "^4.0.0",
+    "tailwindcss": "^3.4",
+    "vite": "^5.2",
+    "vite-plugin-uhuu": "^1.0.0"
+  },
+  "dependencies": {
+    "@vitejs/plugin-vue": "^5.1.4",
+    "vite-plugin-mkcert": "^1.17.6"
+  }
+}

@@ -1,0 +1,28 @@
+{
+  "name": "basic-alone",
+  "private": true,
+  "version": "1.0.0",
+  "scripts": {
+    "dev": "vite",
+    "dev:secure": "vite",
+    "uhuu": "concurrently \"vite\" \"vite build --watch\"",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1"
+  },
+  "devDependencies": {
+    "@types/react": "^18.0.26",
+    "@types/react-dom": "^18.0.9",
+    "@vitejs/plugin-react": "^4.2.0",
+    "autoprefixer": "^10.4.13",
+    "concurrently": "^7.2.1",
+    "postcss": "^8.4.37",
+    "tailwindcss": "^3.4",
+    "vite": "^5.2",
+    "vite-plugin-uhuu": "^1.0.0",    
+    "vite-plugin-mkcert": "^1.17.6"
+  }
+}
