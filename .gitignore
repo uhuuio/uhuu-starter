@@ -17,3 +17,4 @@ yarn-error.log
 /packages/editor
 /packages/docs
 /.cert
+examples/**/package-lock.json
