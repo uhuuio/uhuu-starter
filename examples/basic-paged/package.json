@@ -14,7 +14,7 @@
     "dayjs": "^1.11.2",
     "lodash": "^4.17.21",
     "i18next": "^21.8.10",
-    "@uhuu/components": "github:uhuuio/uhuu-components#main",
+    "@uhuu/components": "@uhuuio/uhuu-components@latest",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-i18next": "^11.17.2",
