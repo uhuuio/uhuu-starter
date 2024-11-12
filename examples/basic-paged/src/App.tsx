@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Template } from './template/Template'
-import {PagedPreview} from "@uhuu/components";
+import {PagedPreview} from "uhuu-components";
 
 // Setup uhuuu editor behaviours for template
 import TemplateSetup from './template/TemplateSetup.js'
