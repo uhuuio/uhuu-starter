@@ -24,7 +24,7 @@
     "i18next": "^21.8.10",
     "lerna": "^8.0.0",
     "lodash": "^4.17.21",
-    "@uhuu/components": "github:uhuuio/uhuu-components",
+    "@uhuu/components": "github:uhuuio/uhuu-components#main",
     "postcss": "^8.4.37",
     "qrcode.react": "^3.1.0",
     "react": "^18.3.1",
