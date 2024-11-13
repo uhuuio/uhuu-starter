@@ -5,9 +5,9 @@
   "scripts": {
     "dev": "vite",
     "dev:secure": "vite",
-    "uhuu": "concurrently \"vite\" \"vite build --watch\"",
     "build": "vite build",
-    "preview": "vite preview"
+    "build:all": "vite build",
+    "uhuu": "concurrently \"vite\" \"vite build --watch\""    
   },
   "dependencies": {
     "react": "^18.3.1",

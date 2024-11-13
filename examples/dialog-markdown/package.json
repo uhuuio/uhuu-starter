@@ -6,8 +6,8 @@
     "dev": "vite",
     "dev:secure": "vite",
     "build": "vite build",
-    "uhuu": "concurrently \"vite\" \"vite build --watch\"",
-    "preview": "vite preview"
+    "build:all": "vite build",
+    "uhuu": "concurrently \"vite\" \"vite build --watch\""    
   },
   "dependencies": {
     "uhuu-components": "^0.1",

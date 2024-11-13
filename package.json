@@ -9,7 +9,7 @@
     "dev:secure": "lerna run dev:secure --scope",
     "uhuu:all": "lerna run uhuu",
     "uhuu": "lerna run uhuu --scope",
-    "build:all": "lerna run build",
+    "build:all": "lerna run build:all",
     "build": "lerna run build --scope"
   },
   "devDependencies": {
