@@ -1,14 +1,20 @@
 # Basic Markdown Dialog (Alone) 
 
-*Run example over SSL on your local*
-```bash
-npm run dev:secure
-```
 
 ## Try this example on your local
 
 ```bash
 npm create uhuu-starter@latest -- --example dialog-markdown
+```
+
+*Run Example with SSL*
+```bash
+# Watch changes and build uhuu.zip
+npm run uhuu
+# Run dev server with HTTPS
+npm run dev:secure
+# Build project and create uhuu.zip
+npm run build
 ```
 
 ## Try dialog-markdown example from uhuu.io
