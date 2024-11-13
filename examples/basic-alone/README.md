@@ -1,10 +1,9 @@
 # Basic Example (Image Dialog) Alone
 
-*Run with Lerna from root folder*
-`npm run dev basic-alone`
-
-*Run with Vite from example*
-`npm run dev:secure`
+*Run example over SSL on your local*
+```bash
+npm run dev:secure
+```
 
 ## Try this example on your local
 

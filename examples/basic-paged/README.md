@@ -1,10 +1,15 @@
 # Real Estate (Paged)
 
-*Run with Lerna from root folder*
-`npm run dev basic-paged`
+*Run example over SSL on your local*
+```bash
+npm run dev:secure
+```
 
-*Run with Vite from example*
-`npm run dev:secure`
+## Try this example on your local
+
+```bash
+npm create uhuu-starter@latest -- --example basic-paged
+```
 
 ## Try basic-paged example from uhuu.io
 

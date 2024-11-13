@@ -20,7 +20,7 @@ export default ({ mode }) => {
   // Add uhuu plugin for uhuu and build events
   if (event === 'uhuu' || event === 'build') config.plugins.push(uhuu());
   // Install SSL certificate for secure local development
-  if (event === 'dev:secure' || process.env.LERNA_PACKAGE_NAME) config.plugins.push(mkcert({ savePath: './../../.cert' }));
+  if (event === 'dev:secure'|| process.env.LERNA_PACKAGE_NAME) config.plugins.push(mkcert({ savePath: process.env.LERNA_PACKAGE_NAME ? './../../.cert' : '.cert' }));
   // Output to public folder when building all with lerna
   if (event === 'build:all') config.build = { outDir: `./../../public/${process.env.npm_package_name}`, emptyOutDir: true };
 

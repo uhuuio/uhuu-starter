@@ -1,10 +1,15 @@
 # Basic Markdown Dialog (Alone) 
 
-*Run with Lerna from root folder*
-`npm run dev dialog-markdown`
+*Run example over SSL on your local*
+```bash
+npm run dev:secure
+```
 
-*Run with Vite from example*
-`npm run dev:secure`
+## Try this example on your local
+
+```bash
+npm create uhuu-starter@latest -- --example dialog-markdown
+```
 
 ## Try dialog-markdown example from uhuu.io
 
