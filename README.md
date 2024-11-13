@@ -1,6 +1,16 @@
 # Uhuu Starter Examples
 
-Welcome to the **Uhuu Starter Examples** repository! This repository provides a set of starter examples for building and running Uhuu templates using `React`, `Vite` and `Lerna`.
+Welcome to the **Uhuu Starter Examples** repository! This repository provides a set of starter examples for building and running Uhuu templates using `React`, `Vite`, and `Lerna`.
+
+## Installation
+
+To get started with a specific example, you can quickly clone and set up an example template using the following command:
+
+```bash
+npm create uhuu-starter@latest -- --example basic-alone
+```
+
+Replace `basic-alone` with the name of any other example to set up that template.
 
 ## Structure and Setup
 
