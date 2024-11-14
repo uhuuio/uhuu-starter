@@ -1,4 +1,4 @@
-# Basic Direct Mail
+# Direct Mail
 
 ## Try this example on your local
 
