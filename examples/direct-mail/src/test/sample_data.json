@@ -1,0 +1,14 @@
+{
+    "user": {
+        "id": 2,
+        "company": "Alpine Innovations",
+        "first_name": "Mia",
+        "last_name": "Keller",
+        "city": "Geneva",
+        "street_address": "Rue du Rhône 30",
+        "postal_code": "1204"
+    },
+    "event_date": "",
+    "qr_url": "https://uhuu.io?workshop=true",
+    "message": "Dear {name},\n\nIn today’s fast-paced business environment, efficient document automation can save time and streamline your workflows. Are you interested in learning more about automated document generation for your organization?\n\nJoin us for an exclusive **Uhuu Workshop** on **{eventDate}** in Zurich to dive into the world of document automation. This hands-on session will guide you through Uhuu's powerful features for creating dynamic documents with ease.\n\nDuring the workshop, our Uhuu experts will demonstrate practical use cases, share best practices, and answer your questions. Whether you’re looking to automate client communications, generate reports, or streamline internal documentation, this workshop is designed to provide valuable insights.\n\nReserve your spot today, as seating is limited! Feel free to contact us if you have any questions. We look forward to welcoming you to this exciting event."
+}
