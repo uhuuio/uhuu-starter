@@ -7,10 +7,10 @@ Welcome to the **Uhuu Starter Examples** repository! This repository provides a 
 To get started with a specific example, you can quickly clone and set up an example template using the following command:
 
 ```bash
-npm create uhuu-starter@latest -- --example basic-alone
+npm create uhuu-starter@latest -- --example direct-mail
 ```
 
-Replace `basic-alone` with the name of any other example to set up that template.
+Replace `direct-mail` with the name of any other example to set up that template.
 
 ## Structure and Setup
 
