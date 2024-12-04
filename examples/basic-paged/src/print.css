@@ -1,0 +1,49 @@
+@page { 
+  size: A4; 
+  margin: 12mm 0;
+}
+
+#reference_nr {
+  string-set: title content(text);
+}
+
+@page :first {
+  margin:  12mm 0 0 0;
+  @bottom-left { content: ''; }
+  @bottom-right { content: ''; }
+}
+
+@page {
+  @bottom-left {
+    content: "Uhuu.io";
+    font-size: 7pt;
+    left: 15mm;
+    position: absolute;
+    bottom: 10mm;
+  }
+  @bottom-right {
+    content: counter(page);
+    font-size: 7pt;
+    right: 15mm;
+    position: absolute;
+    bottom: 10mm;
+  }
+}
+
+.page-break-inside-avoid {
+  page-break-inside: avoid;
+  break-inside: avoid-page;  
+}
+
+.page-break-after {
+  page-break-after: always;
+  break-inside: avoid-page;
+  break-after: page;
+}
+
+.page-break-before {
+  page-break-before: always;
+  break-inside: avoid-page;
+  break-before: page;
+}
+

@@ -11,6 +11,7 @@ module.exports = {
         'sans': ['"Open Sans"', ...defaultTheme.fontFamily.sans],
       },
       fontSize: {
+        'sm' : ['0.825rem', '1.25rem'],
         '4xl': ['2.26rem', '2.5rem'],
         '4xl-cover': ['2.3rem', '2.6rem'],
       },

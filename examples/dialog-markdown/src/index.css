@@ -6,29 +6,6 @@
 @tailwind components;
 @tailwind utilities;
 
-@media screen {
-  [data-uhuu] { @apply cursor-pointer  }
-  .mark[data-uhuu] { @apply cursor-pointer hover:outline outline-[#ff44cc] hover:outline-dashed hover:rounded relative; }
-  .mark[data-uhuu]:before {
-      content: ' ';
-      @apply absolute w-4 h-4 bg-[#ff44cc] rounded-t-full rounded-r-full top-0 ml-1 mt-1 opacity-20 transition;
-  }
-  .mark[data-uhuu]:hover:before { @apply opacity-100 transition; }
-}
-
-/* Custom */
-body {
-	font-family: 'Noto Sans', sans-serif;
-  font-size:14px;
-  color: #1A1919;
-}
-
-.font-abel  {
-  font-family: Abel, sans-serif
-}
-
-
-
 .markdown h1, 
 .markdown h2, 
 .markdown h3, 
@@ -40,8 +17,6 @@ body {
 .markdown h3 { @apply text-base font-medium; }
 .markdown h4 { @apply text-base font-medium; }
 .markdown p, .markdown ul { @apply pb-8; }
-
-
 
 /* markdown-table.css */
 .markdown table {
@@ -58,36 +33,5 @@ body {
 
 .markdown table tr:nth-child(even) {
   @apply bg-gray-100;
-}
-
-
-
-.text-sm {
-    font-size: .825rem;
-    line-height: 1.25rem;
-}
-
-@media screen {
-  .pagedjs_preview_container { margin: 0 auto; }
-  .uhuu-page { opacity: 0; }
-  .uhuu-page.rendered { opacity: 1; }
-
-  body { background: transparent; }
-
-  .pagedjs_pages {
-       display: flex;
-       width: calc(var(--pagedjs-width));
-       flex: 0; flex-wrap: wrap;
-       margin: 0 auto; justify-content: center;
-       background: transparent;
-   }
-
-   .pagedjs_page {
-    background: white;
-    box-shadow: inset 0px 0px 0px 2px rgba(0, 0, 0, 0.1);
-    border-radius: 0.25rem;
-    margin: 1rem;
-  }
-  
 }
 

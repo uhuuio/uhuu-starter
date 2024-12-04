@@ -5,15 +5,3 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
-@media screen {
-  [data-uhuu] { @apply cursor-pointer outline outline-transparent outline-dashed hover:outline-pink-600; }  
-}
-
-.A4 { @apply h-[297mm] w-[210mm]; }
-
-@media screen {
-    .A4 {
-        @apply shadow mx-auto;
-    }
-}

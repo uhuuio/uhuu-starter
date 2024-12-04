@@ -25,7 +25,7 @@ export function Page({ payload }) {
     .replace('{eventDate}', eventDate);
 
   return (
-    <div className="A4 bg-white relative">
+    <div>
       <div className="p-6 mx-6">
         {/* Header with company information */}
         <div className="flex justify-between items-center">

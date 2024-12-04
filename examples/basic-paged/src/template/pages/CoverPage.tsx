@@ -8,7 +8,7 @@ dayjs.extend(timezone)
 import { useTranslation } from 'react-i18next';
 
 export default function ({ payload }) {
-  console.log(payload);
+  
   const { listing } = payload ?? {};
   const { t, i18n } = useTranslation();
 
