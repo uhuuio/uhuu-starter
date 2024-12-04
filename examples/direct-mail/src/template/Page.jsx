@@ -2,7 +2,7 @@ import React from 'react';
 import {QRCodeSVG} from 'qrcode.react';
 import Markdown from 'react-markdown';
 import dayjs from 'dayjs';
-import { UserSchema } from './../test/schema';
+import { UserSchema } from './../../test/schema';
 
 export function Page({ payload }) {
   // Fields from the payload for readability
