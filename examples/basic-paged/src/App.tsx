@@ -10,7 +10,7 @@ import TemplateSetup from './template/TemplateSetup.js'
 TemplateSetup();
 
 // Define sample data for local development
-import sampleData from './test/sample_data.json'
+import sampleData from './../test/sample_data.json'
 
 // use sample data for local development.
 var defaultData = import.meta.env.DEV ? sampleData : null;

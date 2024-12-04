@@ -4,7 +4,7 @@ const { Sheet, Pagination } = Static;
 import { Page } from './template/Page'
 
 // Define sample data for local development
-import sampleData from './test/sample_data.json'
+import sampleData from './../test/sample_data.json'
 
 var defaultData = import.meta.env.DEV ? sampleData : null;
 

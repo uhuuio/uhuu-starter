@@ -5,7 +5,7 @@ const { Pagination } = Dynamic;
 import printCssRaw from './print.css?raw';
 
 // Define sample data for local development
-import sampleData from './test/sample_data.json'
+import sampleData from './../test/sample_data.json'
 
 // use sample data for local development.
 var defaultData = import.meta.env.DEV ? sampleData : null;
