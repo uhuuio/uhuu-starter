@@ -22,7 +22,7 @@ function App() {
   if(!payload) return <></>;
 
   return (
-    <Pagination setup={{ format: "A4", printCssRaw }}>
+    <Pagination setup={{ format: "A4", bleed: 3, printCssRaw }}>
         <MarkdownPage payload={payload} />
     </Pagination>
   );

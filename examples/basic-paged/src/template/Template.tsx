@@ -1,14 +1,9 @@
-import React, { Fragment, useEffect } from 'react';
-import { useTranslation } from 'react-i18next';
-
 import CoverPage from "./pages/CoverPage";
 import ImageLayoutPage from "./pages/ImageLayoutPage";
 import FloorPage from "./pages/FloorPage";
 import FeaturePage from "./pages/FeaturePage";
 
 export function Template({ payload }) {
-
-    const { t, i18n } = useTranslation();
 
     return (
         <>

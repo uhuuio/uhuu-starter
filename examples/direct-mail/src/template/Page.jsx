@@ -3,6 +3,7 @@ import {QRCodeSVG} from 'qrcode.react';
 import Markdown from 'react-markdown';
 import dayjs from 'dayjs';
 import { UserSchema } from './../../test/schema';
+import { Editable } from 'uhuu-components';
 
 export function Page({ payload }) {
   // Fields from the payload for readability
@@ -41,24 +42,26 @@ export function Page({ payload }) {
         </div>
 
         {/* Recipient Details */}
-        <div className="mt-10 text-sm inline-block pr-6" data-uhuu onClick={() => $uhuu.editDialog({ path: 'user', type: 'schemaform', schema: UserSchema })}>
+        <Editable className="mt-10 text-sm inline-block pr-6" dialog={{ path: 'user', type: 'schemaform', schema: UserSchema }}>
           <p>Personal Invitation</p>
           <p>Dear {first_name} {last_name}</p>
           <p>{company}</p>
           <p>{street_address}</p>
           <p>{city}, {postal_code}</p>
-        </div>
+        </Editable>
 
         {/* Date and Title */}
         <div className="mt-8 text-sm">
-          <div className="inline-block pr-6" data-uhuu onClick={() => $uhuu.editDialog({ path: 'event_date' })}>{eventDate}</div>
+          <Editable className="inline-block pr-6" dialog={{ path: 'event_date' }}>{eventDate}</Editable>
           <div className="mt-6 text-xl font-bold">Automated documents with Uhuu</div>
         </div>
 
         {/* Message Body */}
-        <div data-uhuu onClick={() => $uhuu.editDialog({ path: 'message', type: 'markdown' })} className="mt-6 text-sm leading-relaxed whitespace-prewrap prose w-full max-w-none text-black">
-          <Markdown>{populatedMarkdown}</Markdown>
-        </div>
+        <Editable dialog={{ path: 'message', type: 'markdown' }}>
+          <div className="mt-6 text-sm leading-relaxed whitespace-prewrap prose w-full max-w-none text-black">
+            <Markdown>{populatedMarkdown}</Markdown>
+          </div>
+        </Editable>
 
         {/* Footer with signatures */}
         <div className="flex justify-between items-center mt-10">
@@ -75,9 +78,9 @@ export function Page({ payload }) {
         {/* Call-to-action */}
         <div className="text-sm text-right border-t flex justify-end items-center absolute bottom-0 right-0 left-0 px-6 py-3">
           <div className="max-w-64 mr-6">Scan the QR code below to register directly for the Uhuu Workshop.</div>
-          <span data-uhuu onClick={() => $uhuu.editDialog({ path: 'qr_url' })}>
+          <Editable dialog={{ path: 'qr_url' }}>
             <QRCodeSVG className="relative bg-white p-2 h-full" fgColor="#1A1919" bgColor="#fff" value={payload.qr_url} />
-          </span>
+          </Editable>
         </div>
       </div>
     </div>
