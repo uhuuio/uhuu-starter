@@ -37,7 +37,6 @@
     "vite-plugin-uhuu": "^1.0.0"
   },
   "dependencies": {
-    "@vitejs/plugin-vue": "^5.1.4",
     "vite-plugin-mkcert": "^1.17.6"
   }
 }
