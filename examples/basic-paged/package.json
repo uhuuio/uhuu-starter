@@ -9,13 +9,13 @@
     "build:all": "vite build",
     "uhuu": "concurrently \"vite\" \"vite build --watch\""
   },
-  "dependencies": {    
-    "react": "^18.3.1",
-    "react-dom": "^18.3.1",    
+  "dependencies": {
     "currency.js": "^2.0.4",
     "dayjs": "^1.11.2",
+    "i18next": "^21.8.10",
     "lodash": "^4.17.21",
-    "i18next": "^21.8.10",        
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
     "react-i18next": "^11.17.2",
     "react-markdown": "^9.0.1",
     "rehype-raw": "^7.0.0",
@@ -31,8 +31,8 @@
     "concurrently": "^7.2.1",
     "postcss": "^8.4.37",
     "tailwindcss": "^3.4",
-    "vite": "^5.2",
-    "vite-plugin-uhuu": "^1.0.0",
-    "vite-plugin-mkcert": "^1.17.6"
+    "vite": "^7.0.0",
+    "vite-plugin-mkcert": "^1.17.6",
+    "vite-plugin-uhuu": "^1.0.0"
   }
 }
