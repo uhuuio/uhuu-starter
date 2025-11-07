@@ -1,8 +1,8 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { MarkdownPage } from './template/MarkdownPage'
 import { Dynamic } from 'uhuu-components';
 const { Pagination } = Dynamic;
-import printCssRaw from './print.css?raw';
+import printCssRaw from './../styles/print.css?raw';
 
 // Define sample data for local development
 import sampleData from './../test/sample_data.json'
