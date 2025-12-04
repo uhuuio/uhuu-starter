@@ -1,6 +1,8 @@
 import ReactMarkdown from "react-markdown";
 import remarkGfm from 'remark-gfm'
-import { Editable } from 'uhuu-components'; 
+import { Editable } from 'uhuu-components';
+import { HeaderSchema } from './../../test/header_schema';
+import { Twemoji } from './twemoji'; 
 
 /**
  * MarkdownPage Template
@@ -35,24 +37,32 @@ export function MarkdownPage({ payload }) {
         <div className="flex py-6 items-center ">    
           <img src="https://platform.uhuu.io/common/brand/logos/uhuu_logo.svg" className="h-14" />  
         </div>
-        {header.length > 0 && (
-          <div className="block text-right text-xs leading-5">
-            {header.map((line, index) => (
-              <span key={index}>
-                {line}
-                {index < header.length - 1 && <br/>}
-              </span>
-            ))}
-          </div>
-        )}
+        <Editable dialog={{ path: 'header', type: 'schemaform', schema: HeaderSchema }}>
+          {header.length > 0 ? (
+            <div className="block text-right text-xs leading-5">
+              {header.map((line, index) => (
+                <span key={index}>
+                  <Twemoji>{line}</Twemoji>
+                  {index < header.length - 1 && <br/>}
+                </span>
+              ))}
+            </div>
+          ) : (
+            <div className="block text-right text-xs leading-5 text-gray-400 italic">
+              Click to add header
+            </div>
+          )}
+        </Editable>
       </div>
 
         <Editable dialog={{ path: 'body', type: 'markdown' }}>            
           <WrapInColumns>
-            <ReactMarkdown
-              remarkPlugins={[remarkGfm]}
-              children={payload.body}
-            />
+            <Twemoji>
+              <ReactMarkdown
+                remarkPlugins={[remarkGfm]}
+                children={payload.body}
+              />
+            </Twemoji>
           </WrapInColumns>
         </Editable>
     </div>

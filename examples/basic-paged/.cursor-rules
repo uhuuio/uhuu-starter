@@ -1,0 +1,27 @@
+# Uhuu Starter guidance
+- Reference first: follow https://developer.uhuu.io/docs/uhuu-sdk/ for API shapes/events and keep names/signatures identical to the docs.
+- Components: prefer https://components.uhuu.io/ over bespoke UI; stick to provided tokens, spacing, and accessibility defaults. Keep Tailwind/custom CSS minimal and confined to the example.
+- SDK usage: instantiate the Uhuu client in one module per example; keep SDK interactions separated from view logic (extract fetch/transform helpers). Follow documented event names and payloads; avoid ad-hoc shapes.
+- Examples stay isolated: no cross-example imports. Preserve each example's `package.json`, `vite.config.mjs`, and `src` entry pattern; keep `npm run dev|uhuu|build <example>` working.
+- Content and secrets: keep sample data in `src/template` or fixtures; never bake real credentials or endpoints. Use `VITE_` env vars if needed and document them in the example README.
+- Docs and comments: update the example's README when behavior or setup changes; add brief code comments only where logic isn't obvious (e.g., non-trivial SDK wiring).
+
+## Template Setup Patterns
+- Use `$uhuu.templateSetup({ preprocess: ... })` for payload initialization and transformation before rendering.
+- Reference: https://developer.uhuu.io/docs/advanced/template-setup#preprocess
+- `preprocess` runs automatically on all payload updates, so no manual calls needed in useState or listeners.
+- Use `preprocess` for: default value initialization, data transformation, enrichment, custom logic.
+- Only initialize values if they are `undefined` (not if they're empty arrays/objects) to respect user intent.
+- Example: Initialize header only if `payload.header === undefined`, not if it's `[]`.
+
+## Editable Component Patterns
+- Use `Editable` from `uhuu-components` to make content editable via dialogs.
+- Dialog types:
+  - `type: 'markdown'` - for markdown content editing (e.g., `dialog={{ path: 'body', type: 'markdown' }}`)
+  - `type: 'schemaform'` - for structured data editing with JSON Schema (e.g., `dialog={{ path: 'header', type: 'schemaform', schema: HeaderSchema }}`)
+  - `type: undefined` (default) - for simple string editing (e.g., `dialog={{ path: 'event_date' }}`)
+- Schema examples: see `../direct-mail/test/schema.js` for object schemas, `test/header_schema.js` for array schemas.
+- Schema format: Use JSON Schema Draft 07 (`$schema: "http://json-schema.org/draft-07/schema#"`).
+- For arrays: define `type: "array"` with `items` property specifying the item type.
+- For objects: define `type: "object"` with `properties` object containing field definitions.
+- Always provide placeholder content when wrapping empty/null values in Editable components for better UX.
