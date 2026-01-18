@@ -3,9 +3,7 @@
 @import url('./markdown.css');
 
 /* Optional tailwind set up */
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
 
 .markdown h1, 
 .markdown h2, 
@@ -35,4 +33,3 @@
 .markdown table tr:nth-child(even) {
   @apply bg-gray-100;
 }
-

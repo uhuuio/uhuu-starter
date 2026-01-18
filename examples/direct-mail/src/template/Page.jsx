@@ -76,7 +76,7 @@ export function Page({ payload }) {
         </div>
 
         {/* Call-to-action */}
-        <div className="text-sm text-right border-t flex justify-end items-center absolute bottom-0 right-0 left-0 px-6 py-3">
+        <div className="text-sm text-right border-t border-gray-300 flex justify-end items-center absolute bottom-0 right-0 left-0 px-6 py-3">
           <div className="max-w-64 mr-6">Scan the QR code below to register directly for the Uhuu Workshop.</div>
           <Editable dialog={{ path: 'qr_url' }}>
             <QRCodeSVG className="relative bg-white p-2 h-full" fgColor="#1A1919" bgColor="#fff" value={payload.qr_url} />

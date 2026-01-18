@@ -1,11 +1,12 @@
-const defaultTheme = require('tailwindcss/defaultTheme')
+import defaultTheme from 'tailwindcss/defaultTheme'
+import typography from '@tailwindcss/typography'
 
-module.exports = {
+export default {
   content: [
     "./index.html",
     "./src/**/*.{vue,js,ts,jsx,tsx}",
   ],
-  theme: {    
+  theme: {
     extend: {
       fontFamily: {
         'sans': ['"Open Sans"', ...defaultTheme.fontFamily.sans],
@@ -19,6 +20,6 @@ module.exports = {
     },
   },
   plugins: [
-    require('@tailwindcss/typography')
+    typography,
   ],
 }
