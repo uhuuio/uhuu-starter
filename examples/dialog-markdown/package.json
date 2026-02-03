@@ -20,7 +20,7 @@
     "rehype-raw": "^7.0.0",
     "remark-breaks": "^4.0.0",
     "remark-gfm": "^4.0.0",
-    "uhuu-components": "^0.1"
+    "uhuu-components": "^0.2"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4.0.0",

@@ -1,5 +1,5 @@
 import React from 'react';
-import { ImageBleed, Editable } from 'uhuu-components';
+import { ImageBlock, Editable } from 'uhuu-components';
 
 export function Page({payload}) {  
   const { title, message, url } = payload
@@ -13,8 +13,13 @@ export function Page({payload}) {
         <div className="text-base mt-9">{message}</div>
       </Editable>
 
-      <ImageBleed 
-        src={url} top={100} bottom={10} right={0} left={10}
+      <ImageBlock
+        mode="bleed"
+        src={url}
+        top={100}
+        bottom={10}
+        right={0}
+        left={10}
         dialog={{
           path: 'url',
           type: 'image',

@@ -31,7 +31,7 @@
     "react-markdown": "^9.0.1",
     "remark-gfm": "^4.0.0",
     "tailwindcss": "^4.0.0",
-    "uhuu-components": "^0.1",
+    "uhuu-components": "^0.2.24",
     "vite": "^7.0.0",
     "vite-plugin-uhuu": "^1.0.0"
   },
