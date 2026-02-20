@@ -26,3 +26,10 @@ npm run dev
 
 - [react-notion-render](https://github.com/9gustin/react-notion-render) – library used to render Notion blocks.
 - Local copy: `ref/react-notion-render-main/` (for API and block format reference).
+
+
+## Try direct-mail example from uhuu.io
+
+[![Open in CodeSandbox](https://codesandbox.io/static/img/play-codesandbox.svg)](https://codesandbox.io/embed/github/uhuuio/uhuu-starter/tree/main/examples/uhuu-notion?view=preview&theme=dark&codemirror=1)
+
+[![Open in StackBlitz](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/github/uhuuio/uhuu-starter/tree/main/examples/uhuu-notion)
