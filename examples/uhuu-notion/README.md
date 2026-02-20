@@ -14,8 +14,8 @@ See `test/sample_data.json` for an example (Notion page + blocks with callouts, 
 ## Run locally
 
 ```bash
-# From repo root or examples/notion-beta
-npm install --legacy-peer-deps   # peer deps: react-notion-render expects React 18
+# From repo root or examples/uhuu-notion
+npm install
 npm run dev
 ```
 
