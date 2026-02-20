@@ -13,6 +13,7 @@
     "build": "lerna run build --scope"
   },
   "devDependencies": {
+    "@9gustin/react-notion-render": "^3.11.4",
     "@tailwindcss/postcss": "^4.0.0",
     "@tailwindcss/typography": "^0.5.15",
     "@types/react": "^19.2.3",
@@ -40,6 +41,10 @@
     "vite-plugin-mkcert": "^1.17.6"
   },
   "overrides": {
-    "tar": "^7.5.3"
+    "tar": "^7.5.3",
+    "@9gustin/react-notion-render": {
+      "react": "^19.2.1",
+      "react-dom": "^19.2.1"
+    }
   }
 }
