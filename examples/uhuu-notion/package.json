@@ -34,5 +34,12 @@
     "vite": "^7.0.0",
     "vite-plugin-mkcert": "^1.17.6",
     "vite-plugin-uhuu": "^1.0.0"
+  },
+  "overrides": {
+    "tar": "^7.5.3",
+    "@9gustin/react-notion-render": {
+      "react": "^19.2.1",
+      "react-dom": "^19.2.1"
+    }
   }
 }
