@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Static } from 'uhuu-components';
 const { Sheet, Pagination } = Static;
 import { Page } from './template/Page'
@@ -14,7 +14,7 @@ function App() {
 	const [payload, setPayload] = useState($uhuu.payload() || defaultData);
 
 	// Listen $uhuu SDK events and update payload state to recent one.
-	$uhuu.listen('payload', (data) => setPayload(data));
+	useEffect(() => $uhuu.listen('payload', (data) => setPayload(data)), []);
 
 	if(!payload) return <></>;
 

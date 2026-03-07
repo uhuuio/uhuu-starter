@@ -22,8 +22,8 @@ function App() {
   const [payload, setPayload] = useState( $uhuu.payload() || $uhuu.restore.handle(defaultData) );
 
   // Listen $uhuu SDK events and update payload state to recent one.
-  $uhuu.listen('payload', (data) => setPayload(data));
-  
+  useEffect(() => $uhuu.listen('payload', (data) => setPayload(data)), []);
+
   // localization
   const { t, i18n } = useTranslation();
 

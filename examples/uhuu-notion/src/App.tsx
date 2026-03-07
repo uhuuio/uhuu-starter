@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { NotionPage } from './template/NotionPage'
 import { Dynamic } from 'uhuu-components';
 const { Pagination } = Dynamic;
@@ -35,7 +35,7 @@ function App() {
   const [payload, setPayload] = useState( $uhuu.payload() || defaultData );
 
   // Listen $uhuu SDK events and update payload state to recent one.
-  $uhuu.listen('payload', (data) => setPayload(data));
+  useEffect(() => $uhuu.listen('payload', (data) => setPayload(data)), []);
 
   if(!payload) return <></>;
 
