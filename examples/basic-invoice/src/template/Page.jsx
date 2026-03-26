@@ -2,8 +2,8 @@ import React from 'react';
 import { Editable } from 'uhuu-components';
 import { getTheme } from '../themes';
 
-const fmtCurrency = (amount, currency = 'EUR') =>
-  new Intl.NumberFormat('en-EU', { style: 'currency', currency, minimumFractionDigits: 2 }).format(amount);
+const fmt = (value, currency = 'EUR') =>
+  new Intl.NumberFormat('en-EU', { style: 'currency', currency, minimumFractionDigits: 2 }).format(value ?? 0);
 
 const fmtDate = (dateStr) => {
   if (!dateStr) return '';
@@ -13,6 +13,43 @@ const fmtDate = (dateStr) => {
 const fmtMethod = (method) =>
   method ? method.replace(/_/g, ' ').replace(/\b\w/g, (c) => c.toUpperCase()) : '';
 
+const STATUS_STYLES = {
+  paid:            { bg: '#dcfce7', color: '#166534' },
+  open:            { bg: '#dbeafe', color: '#1e40af' },
+  overdue:         { bg: '#fee2e2', color: '#991b1b' },
+  draft:           { bg: '#f3f4f6', color: '#4b5563' },
+  partiallyPaid:   { bg: '#fef9c3', color: '#854d0e' },
+  void:            { bg: '#f3f4f6', color: '#9ca3af' },
+};
+
+function OrgBlock({ org, label, path, theme }) {
+  if (!org) return null;
+  const addr = org.address ?? {};
+  return (
+    <div>
+      <div className="text-[9px] font-bold uppercase tracking-widest mb-2" style={{ color: theme.mutedForeground }}>
+        {label}
+      </div>
+      <Editable dialog={{ path }}>
+        <div className="font-semibold">{org.name}</div>
+        {org.legalName && org.legalName !== org.name && (
+          <div style={{ color: theme.mutedForeground }}>{org.legalName}</div>
+        )}
+        {org.taxId && <div style={{ color: theme.mutedForeground }}>Tax ID: {org.taxId}</div>}
+        {addr.streetAddress && <div>{addr.streetAddress}</div>}
+        {(addr.postalCode || addr.addressLocality) && (
+          <div>
+            {[addr.postalCode, addr.addressLocality, addr.addressRegion].filter(Boolean).join(' ')}
+            {addr.addressCountry && `, ${addr.addressCountry}`}
+          </div>
+        )}
+        {org.email && <div>{org.email}</div>}
+        {org.telephone && <div>{org.telephone}</div>}
+      </Editable>
+    </div>
+  );
+}
+
 export function InvoicePage({ payload, pagePayload }) {
   const invoice = payload?.invoice;
   const theme = getTheme(pagePayload?.theme);
@@ -21,17 +58,22 @@ export function InvoicePage({ payload, pagePayload }) {
 
   const {
     invoiceNumber,
+    purchaseOrderNumber,
     issueDate,
     dueDate,
-    currency,
-    seller,
-    buyer,
-    lineItems = [],
-    totals,
+    status,
     paymentTerms,
+    issuer,
+    billTo,
+    lineItems = [],
+    taxes = [],
+    totals = {},
+    paymentSummary,
     notes,
-    references,
   } = invoice;
+
+  const currency = totals.currency ?? 'EUR';
+  const statusStyle = STATUS_STYLES[status] ?? STATUS_STYLES.draft;
 
   return (
     <div
@@ -39,23 +81,21 @@ export function InvoicePage({ payload, pagePayload }) {
       style={{ fontFamily: theme.fontSans, background: theme.background, color: theme.foreground }}
     >
       {/* ── Header ─────────────────────────────────────────────────── */}
-      <div
-        className="flex justify-between items-start mb-8 pb-5"
-        style={{ borderBottom: `2px solid ${theme.primary}` }}
-      >
+      <div className="flex justify-between items-start mb-8 pb-5" style={{ borderBottom: `2px solid ${theme.primary}` }}>
         <div className="space-y-0.5">
-          <Editable dialog={{ path: 'invoice.seller.name' }}>
-            <div className="text-xl font-bold" style={{ color: theme.primary }}>
-              {seller.name}
+          <div className="text-xl font-bold" style={{ color: theme.primary }}>
+            {issuer?.name}
+          </div>
+          {issuer?.taxId && <div style={{ color: theme.mutedForeground }}>Tax ID: {issuer.taxId}</div>}
+          {issuer?.address?.streetAddress && <div>{issuer.address.streetAddress}</div>}
+          {issuer?.address && (
+            <div>
+              {[issuer.address.postalCode, issuer.address.addressLocality, issuer.address.addressRegion].filter(Boolean).join(' ')}
+              {issuer.address.addressCountry && `, ${issuer.address.addressCountry}`}
             </div>
-          </Editable>
-          {seller.vatId && (
-            <div style={{ color: theme.mutedForeground }}>VAT: {seller.vatId}</div>
           )}
-          <div>{seller.address.street}</div>
-          <div>{seller.address.postalCode} {seller.address.city}, {seller.address.country}</div>
-          {seller.contact?.email && <div>{seller.contact.email}</div>}
-          {seller.contact?.phone && <div>{seller.contact.phone}</div>}
+          {issuer?.email && <div>{issuer.email}</div>}
+          {issuer?.telephone && <div>{issuer.telephone}</div>}
         </div>
 
         <div className="text-right space-y-1">
@@ -65,60 +105,41 @@ export function InvoicePage({ payload, pagePayload }) {
           <Editable dialog={{ path: 'invoice.invoiceNumber' }}>
             <div className="text-sm font-semibold">{invoiceNumber}</div>
           </Editable>
+          {purchaseOrderNumber && (
+            <div style={{ color: theme.mutedForeground }}>PO: {purchaseOrderNumber}</div>
+          )}
           <div style={{ color: theme.mutedForeground }}>
-            Issue date: <span style={{ color: theme.foreground }}>{fmtDate(issueDate)}</span>
+            Issue: <span style={{ color: theme.foreground }}>{fmtDate(issueDate)}</span>
           </div>
-          <div style={{ color: theme.mutedForeground }}>
-            Due date:{' '}
-            <span className="font-semibold" style={{ color: theme.primary }}>{fmtDate(dueDate)}</span>
-          </div>
+          {dueDate && (
+            <div style={{ color: theme.mutedForeground }}>
+              Due: <span className="font-semibold" style={{ color: theme.primary }}>{fmtDate(dueDate)}</span>
+            </div>
+          )}
+          {status && (
+            <div className="inline-flex mt-1">
+              <span
+                className="text-[9px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full"
+                style={{ background: statusStyle.bg, color: statusStyle.color }}
+              >
+                {status}
+              </span>
+            </div>
+          )}
         </div>
       </div>
 
-      {/* ── Seller / Buyer ────────────────────────────────────────── */}
+      {/* ── Issuer / Bill To ─────────────────────────────────────── */}
       <div className="grid grid-cols-2 gap-10 mb-8">
-        <div>
-          <div className="text-[9px] font-bold uppercase tracking-widest mb-2" style={{ color: theme.mutedForeground }}>
-            From
-          </div>
-          <div className="font-semibold">{seller.name}</div>
-          <div>{seller.address.street}</div>
-          <div>{seller.address.postalCode} {seller.address.city}</div>
-          <div>{seller.address.country}</div>
-        </div>
-
-        <div>
-          <div className="text-[9px] font-bold uppercase tracking-widest mb-2" style={{ color: theme.mutedForeground }}>
-            Bill To
-          </div>
-          <Editable dialog={{ path: 'invoice.buyer' }}>
-            <div className="font-semibold">{buyer.name}</div>
-            {buyer.vatId && <div style={{ color: theme.mutedForeground }}>VAT: {buyer.vatId}</div>}
-            <div>{buyer.address.street}</div>
-            <div>{buyer.address.postalCode} {buyer.address.city}</div>
-            <div>{buyer.address.country}</div>
-            {buyer.contact?.email && <div>{buyer.contact.email}</div>}
-          </Editable>
-        </div>
+        <OrgBlock org={issuer} label="From" path="invoice.issuer" theme={theme} />
+        <OrgBlock org={billTo} label="Bill To" path="invoice.billTo" theme={theme} />
       </div>
-
-      {/* ── References ───────────────────────────────────────────── */}
-      {references && Object.values(references).some(Boolean) && (
-        <div className="flex gap-6 mb-5" style={{ color: theme.mutedForeground }}>
-          {references.purchaseOrder && (
-            <span>Purchase Order: <strong style={{ color: theme.foreground }}>{references.purchaseOrder}</strong></span>
-          )}
-          {references.contract && (
-            <span>Contract: <strong style={{ color: theme.foreground }}>{references.contract}</strong></span>
-          )}
-        </div>
-      )}
 
       {/* ── Line Items ───────────────────────────────────────────── */}
-      <table className="w-full mb-6" style={{ borderCollapse: 'collapse' }}>
+      <table className="w-full mb-4" style={{ borderCollapse: 'collapse' }}>
         <thead>
           <tr style={{ background: theme.primary, color: theme.primaryForeground }}>
-            {['Description', 'Qty', 'Unit', 'Unit Price', 'Tax', 'Net', 'Gross'].map((h, i) => (
+            {['Description', 'Category', 'Qty', 'Unit Price', 'Amount'].map((h, i) => (
               <th key={h} className={`py-2 px-3 text-[9px] font-semibold uppercase tracking-wider ${i === 0 ? 'text-left' : 'text-right'}`}>
                 {h}
               </th>
@@ -127,82 +148,79 @@ export function InvoicePage({ payload, pagePayload }) {
         </thead>
         <tbody>
           {lineItems.map((item, i) => (
-            <tr
-              key={item.id}
-              style={{
-                background: i % 2 === 0 ? theme.muted : theme.background,
-                borderBottom: `1px solid ${theme.border}`,
-              }}
-            >
+            <tr key={i} style={{ background: i % 2 === 0 ? theme.muted : theme.background, borderBottom: `1px solid ${theme.border}` }}>
               <td className="py-2 px-3">{item.description}</td>
+              <td className="py-2 px-3 text-right" style={{ color: theme.mutedForeground }}>{item.category ?? '—'}</td>
               <td className="py-2 px-3 text-right">{item.quantity}</td>
-              <td className="py-2 px-3 text-right" style={{ color: theme.mutedForeground }}>{item.unitOfMeasure}</td>
-              <td className="py-2 px-3 text-right">{fmtCurrency(item.unitPrice, currency)}</td>
-              <td className="py-2 px-3 text-right" style={{ color: theme.mutedForeground }}>
-                {item.tax ? `${item.tax.type} ${(item.tax.rate * 100).toFixed(0)}%` : '—'}
-              </td>
-              <td className="py-2 px-3 text-right">{fmtCurrency(item.totalNetAmount, currency)}</td>
-              <td className="py-2 px-3 text-right font-semibold">{fmtCurrency(item.totalGrossAmount, currency)}</td>
+              <td className="py-2 px-3 text-right">{fmt(item.unitPrice?.value, item.unitPrice?.currency ?? currency)}</td>
+              <td className="py-2 px-3 text-right font-semibold">{fmt(item.amount?.value, item.amount?.currency ?? currency)}</td>
             </tr>
           ))}
         </tbody>
       </table>
 
       {/* ── Totals ───────────────────────────────────────────────── */}
-      <div className="flex justify-end mb-8">
-        <div className="w-60 space-y-1">
+      <div className="flex justify-end mb-6">
+        <div className="w-64 space-y-1">
           <div className="flex justify-between py-1" style={{ borderBottom: `1px solid ${theme.border}` }}>
-            <span style={{ color: theme.mutedForeground }}>Net Amount</span>
-            <span>{fmtCurrency(totals.netAmount, currency)}</span>
+            <span style={{ color: theme.mutedForeground }}>Subtotal</span>
+            <span>{fmt(totals.subtotal, currency)}</span>
           </div>
-          <div className="flex justify-between py-1" style={{ borderBottom: `1px solid ${theme.border}` }}>
-            <span style={{ color: theme.mutedForeground }}>Tax Amount</span>
-            <span>{fmtCurrency(totals.taxAmount, currency)}</span>
-          </div>
-          {totals.grossAmount !== totals.payableAmount && (
+          {taxes.map((tax, i) => (
+            <div key={i} className="flex justify-between py-1" style={{ borderBottom: `1px solid ${theme.border}` }}>
+              <span style={{ color: theme.mutedForeground }}>
+                {tax.name}{tax.rate != null ? ` (${(tax.rate * 100).toFixed(0)}%)` : ''}
+              </span>
+              <span>{fmt(tax.amount?.value, tax.amount?.currency ?? currency)}</span>
+            </div>
+          ))}
+          {totals.discountTotal > 0 && (
             <div className="flex justify-between py-1" style={{ borderBottom: `1px solid ${theme.border}` }}>
-              <span style={{ color: theme.mutedForeground }}>Gross Amount</span>
-              <span>{fmtCurrency(totals.grossAmount, currency)}</span>
+              <span style={{ color: theme.mutedForeground }}>Discount</span>
+              <span>−{fmt(totals.discountTotal, currency)}</span>
             </div>
           )}
           <div
             className="flex justify-between py-2 px-3 font-bold text-[13px]"
             style={{ background: theme.primary, color: theme.primaryForeground, borderRadius: theme.radius }}
           >
-            <span>Total Due</span>
-            <span>{fmtCurrency(totals.payableAmount, currency)}</span>
+            <span>Total</span>
+            <span>{fmt(totals.grandTotal, currency)}</span>
           </div>
         </div>
       </div>
 
-      {/* ── Payment Details ──────────────────────────────────────── */}
-      {paymentTerms && (
-        <div
-          className="mb-6 p-4"
-          style={{ background: theme.muted, border: `1px solid ${theme.border}`, borderRadius: theme.radius }}
-        >
+      {/* ── Payment ──────────────────────────────────────────────── */}
+      {paymentSummary && (
+        <div className="mb-5 p-4" style={{ background: theme.muted, border: `1px solid ${theme.border}`, borderRadius: theme.radius }}>
           <div className="text-[9px] font-bold uppercase tracking-widest mb-3" style={{ color: theme.mutedForeground }}>
-            Payment Details
+            Payment
           </div>
           <div className="grid grid-cols-2 gap-3">
-            <div>
-              <span style={{ color: theme.mutedForeground }}>Method: </span>
-              <span className="font-medium">{fmtMethod(paymentTerms.method)}</span>
-            </div>
-            <div>
-              <span style={{ color: theme.mutedForeground }}>Due date: </span>
-              <span className="font-semibold">{fmtDate(paymentTerms.dueDate)}</span>
-            </div>
-            {paymentTerms.bankDetails?.iban && (
+            {paymentSummary.paymentMethod && (
               <div>
-                <span style={{ color: theme.mutedForeground }}>IBAN: </span>
-                <span style={{ fontFamily: theme.fontMono }}>{paymentTerms.bankDetails.iban}</span>
+                <span style={{ color: theme.mutedForeground }}>Method: </span>
+                <span className="font-medium">{fmtMethod(paymentSummary.paymentMethod)}</span>
               </div>
             )}
-            {paymentTerms.bankDetails?.bic && (
+            {paymentTerms && (
               <div>
-                <span style={{ color: theme.mutedForeground }}>BIC: </span>
-                <span style={{ fontFamily: theme.fontMono }}>{paymentTerms.bankDetails.bic}</span>
+                <span style={{ color: theme.mutedForeground }}>Terms: </span>
+                <span className="font-medium">{paymentTerms}</span>
+              </div>
+            )}
+            {paymentSummary.amountPaid?.value > 0 && (
+              <div>
+                <span style={{ color: theme.mutedForeground }}>Paid: </span>
+                <span className="font-semibold">{fmt(paymentSummary.amountPaid.value, paymentSummary.amountPaid.currency ?? currency)}</span>
+              </div>
+            )}
+            {paymentSummary.amountOutstanding?.value > 0 && (
+              <div>
+                <span style={{ color: theme.mutedForeground }}>Outstanding: </span>
+                <span className="font-bold" style={{ color: theme.primary }}>
+                  {fmt(paymentSummary.amountOutstanding.value, paymentSummary.amountOutstanding.currency ?? currency)}
+                </span>
               </div>
             )}
           </div>
