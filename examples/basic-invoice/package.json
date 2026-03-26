@@ -1,0 +1,28 @@
+{
+  "name": "basic-invoice",
+  "private": true,
+  "version": "1.0.0",
+  "scripts": {
+    "dev": "vite",
+    "dev:secure": "vite",
+    "build": "vite build",
+    "build:all": "vite build",
+    "uhuu": "concurrently \"vite\" \"vite build --watch\""
+  },
+  "dependencies": {
+    "react": "^19.2.1",
+    "react-dom": "^19.2.1",
+    "uhuu-components": "^0.2"
+  },
+  "devDependencies": {
+    "@tailwindcss/postcss": "^4.0.0",
+    "@types/react": "^19.2.3",
+    "@types/react-dom": "^19.2.3",
+    "@vitejs/plugin-react": "^5.1.1",
+    "concurrently": "^7.2.1",
+    "tailwindcss": "^4.0.0",
+    "vite": "^7.0.0",
+    "vite-plugin-mkcert": "^1.17.6",
+    "vite-plugin-uhuu": "^1.0.0"
+  }
+}

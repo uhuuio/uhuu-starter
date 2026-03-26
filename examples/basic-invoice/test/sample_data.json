@@ -1,0 +1,85 @@
+{
+  "invoice": {
+    "schema": "https://schemas.uhuu.io/standard/invoice/0.1.0/schema.json",
+    "invoiceNumber": "INV-2026-0001",
+    "issueDate": "2026-03-26",
+    "dueDate": "2026-04-25",
+    "currency": "EUR",
+    "language": "en",
+    "seller": {
+      "name": "Acme S.r.l.",
+      "vatId": "IT12345678901",
+      "taxCode": "12345678901",
+      "address": {
+        "street": "Via Roma 123",
+        "city": "Milano",
+        "postalCode": "20100",
+        "country": "IT"
+      },
+      "contact": {
+        "email": "billing@acme.it",
+        "phone": "+39 02 1234567"
+      }
+    },
+    "buyer": {
+      "name": "Globex Corporation",
+      "vatId": "DE987654321",
+      "address": {
+        "street": "Alexanderplatz 1",
+        "city": "Berlin",
+        "postalCode": "10178",
+        "country": "DE"
+      "contact": {
+        "email": "accounts@globex.com"
+      }
+    },
+    "lineItems": [
+      {
+        "id": "1",
+        "description": "Web development services",
+        "quantity": 10,
+        "unitOfMeasure": "hours",
+        "unitPrice": 80.0,
+        "tax": { "type": "VAT", "rate": 0.22 },
+        "totalNetAmount": 800.0,
+        "totalTaxAmount": 176.0,
+        "totalGrossAmount": 976.0
+      },
+      {
+        "id": "2",
+        "description": "Hosting (March 2026)",
+        "quantity": 1,
+        "unitOfMeasure": "month",
+        "unitPrice": 50.0,
+        "tax": { "type": "VAT", "rate": 0.22 },
+        "totalNetAmount": 50.0,
+        "totalTaxAmount": 11.0,
+        "totalGrossAmount": 61.0
+      }
+    ],
+    "totals": {
+      "netAmount": 850.0,
+      "taxAmount": 187.0,
+      "grossAmount": 1037.0,
+      "payableAmount": 1037.0
+    },
+    "paymentTerms": {
+      "method": "bank_transfer",
+      "dueDate": "2026-04-25",
+      "bankDetails": {
+        "iban": "IT60X0542811101000000123456",
+        "bic": "BCITITMM"
+      }
+    },
+    "notes": "Thank you for your business.",
+    "references": {
+      "purchaseOrder": "PO-2026-7788",
+      "contract": "CTR-2025-12"
+    }
+  },
+  "pages": {
+    "invoice": {
+      "theme": "modern-minimal"
+    }
+  }
+}
