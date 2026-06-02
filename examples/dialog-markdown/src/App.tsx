@@ -1,9 +1,22 @@
 import { useState, useEffect } from 'react';
 import { MarkdownPage } from './template/MarkdownPage'
-import { Dynamic } from 'uhuu-components';
-const { Pagination } = Dynamic;
-import printCssRaw from './../styles/print.css?raw';
+import { EditorShell } from 'uhuu-components';
 import dayjs from 'dayjs';
+
+const { InteractiveModeProvider, TemplateDataProvider, PageEditor } = EditorShell;
+
+const isDev = import.meta.env.DEV;
+
+const templateConfig = {
+  pages: {
+    markdown: {
+      label: 'Markdown',
+      component: MarkdownPage,
+      hasFlow: true,
+    },
+  },
+  initial: ['markdown'],
+};
 
 // Define sample data for local development
 import sampleData from './../test/sample_data.json'
@@ -44,9 +57,15 @@ function App() {
   if(!payload) return <></>;
 
   return (
-    <Pagination setup={{ format: "A4", bleed: 3, printCssRaw }}>
-        <MarkdownPage payload={payload} />
-    </Pagination>
+    <InteractiveModeProvider defaultInteractive={true} enableDevTools={isDev}>
+      <TemplateDataProvider payload={payload} onPayloadChange={setPayload}>
+        <PageEditor
+          templateConfig={templateConfig}
+          pageFormat={{ format: "A4", bleed: 3 }}
+          renderOverlay={() => null}
+        />
+      </TemplateDataProvider>
+    </InteractiveModeProvider>
   );
 }
 

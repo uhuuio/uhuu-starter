@@ -16,10 +16,10 @@ export default {
           '"Noto Sans"',
           'Helvetica',
           'Arial',
-          'sans-serif',
           '"Noto Color Emoji"',
           '"Apple Color Emoji"',
-          '"Segoe UI Emoji"'
+          '"Segoe UI Emoji"',
+          'sans-serif'
         ],
       },
     },

@@ -41,14 +41,14 @@ npm run build [template-name]
 **Example Commands**
 
 ```bash
-# Run the basic-pagedjs template in development mode
-npm run dev basic-pagedjs
+# Run the basic-paged template in development mode
+npm run dev basic-paged
 
-# Run the basic-pagedjs template in Uhuu integration mode
-npm run uhuu basic-pagedjs
+# Run the basic-paged template in Uhuu integration mode
+npm run uhuu basic-paged
 
-# Build the basic-pagedjs template for production
-npm run build basic-pagedjs
+# Build the basic-paged template for production
+npm run build basic-paged
 ```
 
 ### Notes

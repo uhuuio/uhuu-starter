@@ -4,7 +4,7 @@ import { Editable } from 'uhuu-components';
 export default function ({ payload }) {
   const {listing} = payload ?? {};
   return (
-  <div className="page-break-after px-24 relative">
+  <div className="h-full w-full px-24 relative">
 
       <Editable className="aspect-[473/330] -ml-5" dialog={{ path: 'layout_image_1', imagePath: 'url', ratio: 473/330}}>
         <img className="w-full h-full object-cover" src={ imgOptim(payload?.layout_image_1?.url) } />

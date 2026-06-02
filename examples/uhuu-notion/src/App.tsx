@@ -1,9 +1,22 @@
 import { useState, useEffect } from 'react';
 import { NotionPage } from './template/NotionPage'
-import { Dynamic } from 'uhuu-components';
-const { Pagination } = Dynamic;
-import printCssRaw from './../styles/print.css?raw';
+import { EditorShell } from 'uhuu-components';
 import dayjs from 'dayjs';
+
+const { InteractiveModeProvider, TemplateDataProvider, PageEditor } = EditorShell;
+
+const isDev = import.meta.env.DEV;
+
+const templateConfig = {
+  pages: {
+    notion: {
+      label: 'Notion',
+      component: NotionPage,
+      hasFlow: true,
+    },
+  },
+  initial: ['notion'],
+};
 
 // Define sample data for local development (payload.notion = Notion API response)
 import sampleData from './../test/sample_data.json'
@@ -40,9 +53,15 @@ function App() {
   if(!payload) return <></>;
 
   return (
-    <Pagination setup={{ format: "A4", bleed: 3, printCssRaw }}>
-      <NotionPage payload={payload} />
-    </Pagination>
+    <InteractiveModeProvider defaultInteractive={true} enableDevTools={isDev}>
+      <TemplateDataProvider payload={payload} onPayloadChange={setPayload}>
+        <PageEditor
+          templateConfig={templateConfig}
+          pageFormat={{ format: "A4", bleed: 3 }}
+          renderOverlay={() => null}
+        />
+      </TemplateDataProvider>
+    </InteractiveModeProvider>
   );
 }
 

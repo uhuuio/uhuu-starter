@@ -1,9 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Template } from './template/Template'
-import { Dynamic } from 'uhuu-components';
-const { Pagination } = Dynamic;
-import printCssRaw from './print.css?raw';
 
 // Setup uhuuu editor behaviours for template
 import TemplateSetup from './template/TemplateSetup.js'
@@ -36,11 +33,7 @@ function App() {
 
   if(!payload) return <></>;
 
-  return (
-    <Pagination setup={{ format: "A4", printCssRaw }}>
-        <Template payload={payload} />
-    </Pagination>
-  );
+  return <Template payload={payload} onPayloadChange={setPayload} />;
 }
 
 export default App

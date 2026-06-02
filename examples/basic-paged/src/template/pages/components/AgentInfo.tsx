@@ -12,7 +12,7 @@ export default function (props: any) {
         return imgOptim(listing.contact.photo_default);
     }
 
-    return <div className="flex items-center mt-6 page-break text-sm">
+    return <div className="flex items-center mt-6 text-sm">
         {listing.contact.photo_default ?
             <div className="aspect-[310/280] w-[11.5rem] mr-5">
             <img className="w-full h-full object-cover object-left object-top" src={agentPhoto()} />

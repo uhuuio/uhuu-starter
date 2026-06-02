@@ -1,7 +1,7 @@
-import React, { Fragment, useEffect } from 'react';
-import nl2br from '@/utility/nl2br'
 import currency from 'currency.js';
 import { useTranslation } from 'react-i18next';
+import { Static } from 'uhuu-components';
+import AgentInfo from './AgentInfo';
 
 export default function ({ payload }) {
 
@@ -46,30 +46,69 @@ export default function ({ payload }) {
     return currency( price, { separator: "'", symbol: '', precision: 0 }).format();
   }
 
+  const rows = features
+    .map((feature) => {
+      if(!listing[feature[0]][feature[1]]) return null;
+
+      const name = listing[feature[0]][feature[1]];
+      const html = typeof(name) === 'string' ?  name.replace(/\n/g, "<br />") : name;
+
+      return {
+        id: `feature-${feature[0]}-${feature[1]}`,
+        type: 'feature',
+        label: t(feature[2]??feature[1]),
+        html,
+      };
+    })
+    .filter(Boolean);
+
+  const items = [
+    ...rows,
+    {
+      id: 'price',
+      type: 'price',
+      label: listing.price[t("key_wp_pricetypeinternetgerman__c")] ?? t("price"),
+      value: priceFormat(),
+    },
+    {
+      id: 'agent',
+      type: 'agent',
+    },
+  ];
+
   return (
 
-      <div className="divide-y text-sm">
+      <Static.Flow
+        id="property-features"
+        items={items}
+        getKey={(item) => item.id}
+        metaDefaults={{
+          feature: { avoidBreakInside: true },
+          price: { avoidBreakInside: true },
+          agent: { avoidBreakInside: true },
+        }}
+        className="divide-y text-sm"
+        renderItem={(item) => {
+          if (item.type === 'agent') {
+            return <AgentInfo payload={payload} />;
+          }
 
-        {
-          features.map((feature, index) => {
-            if(!listing[feature[0]][feature[1]]) return null;
-
-            let name = listing[feature[0]][feature[1]];
-            let html = typeof(name) === 'string' ?  name.replace(/\n/g, "<br />") : name;
-            return <Fragment key={index}>
-              <div className="flex border-black py-2 page-break-inside-avoid">
-                <div className="w-1/4 pl-2">{ t(feature[2]??feature[1]) }</div>
-                <div className="w-3/4 pr-2"  dangerouslySetInnerHTML={{__html: html }}></div>
+          if (item.type === 'price') {
+            return (
+              <div className="flex border-black py-2 font-bold">
+                <div className="w-1/4 pl-2">{item.label}</div>
+                <div className="w-3/4 pr-2">{item.value}</div>
               </div>
-            </Fragment>
-          })
-        }
+            );
+          }
 
-        <div className="flex border-black py-2 font-bold">
-          <div className="w-1/4 pl-2">{ listing.price[t("key_wp_pricetypeinternetgerman__c")] ?? t("price") }</div>
-          <div className="w-3/4 pr-2">{ priceFormat() }</div>
-        </div>
-
-      </div>
+          return (
+            <div className="flex border-black py-2">
+              <div className="w-1/4 pl-2">{item.label}</div>
+              <div className="w-3/4 pr-2" dangerouslySetInnerHTML={{__html: item.html }} />
+            </div>
+          );
+        }}
+      />
   );
 }

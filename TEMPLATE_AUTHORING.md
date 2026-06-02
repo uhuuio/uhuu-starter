@@ -1,11 +1,11 @@
 # Template Authoring Guide
 
-Complete guide for creating and deploying Uhuu document templates.
+Current Uhuu templates use `uhuu-components` static rendering. Use fixed static pages for authored one-page layouts, and use flow pagination when a designed page contains variable-length rows or blocks.
 
 ## Quick Start
 
 ```bash
-# Create new template from example
+# Create a new template from an example
 npm create uhuu-starter@latest -- --example dialog-markdown
 cd my-template
 
@@ -21,411 +21,248 @@ npm run uhuu
 
 ## Required Files
 
-Every Uhuu template must include:
+Every Uhuu template should include:
 
-```
+```text
 my-template/
-├── package.json          # Dependencies and scripts
-├── vite.config.mjs       # Vite + uhuu plugin config
+├── package.json
+├── vite.config.mjs
 ├── src/
-│   ├── App.tsx          # Main entry point
-│   └── template/        # Your template components
+│   ├── App.tsx
+│   └── template/
 ├── styles/
-│   ├── index.css        # Base styles
-│   └── print.css        # Print CSS (for Dynamic pagination only)
+│   └── index.css
 └── test/
-    └── sample_data.json # Sample payload for dev
+    └── sample_data.json
 ```
 
-**Note**: `print.css` is only required if using `Dynamic.Pagination` (Paged.js). Not needed for `Static.Pagination`.
+`print.css` is not required for current static or flow templates. Page sizing, bleed, and preview mode are passed through `Pagination` or `EditorShell.PageEditor`.
 
-## Setup Object Contract
+## Page Setup
 
-The `setup` object passed to `Pagination` defines page configuration:
+The page setup object accepts page size and preview options:
 
-```typescript
-interface PaginationSetup {
-  format: string;           // REQUIRED: 'A4', 'LETTER', 'LEGAL', etc.
-  bleed?: number;           // OPTIONAL: bleed in mm (default: 0)
-  printCssRaw?: string;     // OPTIONAL: print CSS as string
-  printCssUrl?: string;     // OPTIONAL: external CSS URL
-  orientation?: string;     // OPTIONAL: 'portrait' | 'landscape'
-  showBleed?: boolean;      // OPTIONAL: show bleed guides
-}
+```ts
+type PageSetup = {
+  format?: string;        // A4, LETTER, LEGAL, etc.
+  width?: number;         // explicit width in mm
+  height?: number;        // explicit height in mm
+  orientation?: string;   // portrait or landscape
+  bleed?: number;         // bleed in mm
+  showBleed?: boolean;
+  preview?: string;
+};
 ```
 
-### Example
-
-```tsx
-import { Dynamic } from 'uhuu-components';
-import printCssRaw from './styles/print.css?raw';
-
-function App() {
-  const payload = $uhuu.payload() || sampleData;
-
-  return (
-    <Dynamic.Pagination setup={{
-      format: "A4",
-      bleed: 3,
-      printCssRaw
-    }}>
-      <MyTemplate data={payload} />
-    </Dynamic.Pagination>
-  );
-}
-```
-
-## Print CSS Requirements
-
-> **Note**: Print CSS (`printCssRaw`) is **only required for Dynamic pagination** (using Paged.js).
-> Static pagination uses CSS page breaks and doesn't need printCssRaw.
-
-### Minimum Required CSS (Dynamic Pagination Only)
-
-Templates using `Dynamic.Pagination` should provide `print.css` with these essentials:
-
-```css
-@page {
-  size: A4;           /* Match your format */
-  margin: 12mm;       /* REQUIRED: page margins */
-  bleed: 3mm;         /* If using bleed */
-}
-
-/* Page numbers in footer */
-@page {
-  @bottom-right {
-    content: counter(page);
-    font-size: 7pt;
-    right: 12mm;
-    position: absolute;
-    bottom: 6mm;
-  }
-}
-
-/* Page break utilities */
-.page-break-inside-avoid {
-  page-break-inside: avoid;
-  break-inside: avoid-page;
-}
-
-.page-break-after {
-  page-break-after: always;
-  break-after: page;
-}
-
-.page-break-before {
-  page-break-before: always;
-  break-before: page;
-}
-```
-
-### Why Print CSS Matters (Dynamic Pagination)
-
-**For `Dynamic.Pagination`** (Paged.js-based):
-
-Without `printCssRaw`, uhuu-components will auto-generate **basic CSS** with only:
-- Page size (from format)
-- Bleed amount
-
-You'll be **missing**:
-- Page margins (content will touch edges)
-- Headers/footers
-- Page numbers
-- Page break utilities
-- Custom print styling
-
-**Pro tip**: Always provide print.css for Dynamic pagination templates.
-
-**For `Static.Pagination`**:
-
-Static pagination uses CSS page breaks and doesn't require `printCssRaw`. Page styling is handled through regular CSS.
-
-## Template Validation Checklist
-
-Before deploying your template, verify:
-
-### Build & Run
-- [ ] `npm run build` completes without errors
-- [ ] `npm run dev` works with sample data
-- [ ] `npm run uhuu` runs without console errors
-- [ ] Browser console shows no warnings
-
-### Print Layout
-- [ ] Pages have correct margins (not touching edges)
-- [ ] Page numbers appear in footer
-- [ ] Page breaks work as expected
-- [ ] Content doesn't overflow page bounds
-
-### Images
-- [ ] Images handle bleed correctly
-- [ ] Images don't cause layout shifts
-- [ ] Image quality is acceptable
-
-### Uhuu Integration
-- [ ] Editable fields work in uhuu mode
-- [ ] Payload updates reflect in preview
-- [ ] No errors when toggling interactive mode
-
-## Common Patterns
-
-### Pattern 1a: Basic Document (Dynamic Pagination)
-
-Using Paged.js for advanced pagination:
-
-```tsx
-import { Dynamic } from 'uhuu-components';
-const { Pagination } = Dynamic;
-import printCssRaw from './styles/print.css?raw';  // Required for Dynamic
-
-function App() {
-  const [payload, setPayload] = useState($uhuu.payload());
-  $uhuu.listen('payload', setPayload);
-
-  return (
-    <Pagination setup={{ format: "A4", bleed: 3, printCssRaw }}>
-      <MyPage data={payload} />
-    </Pagination>
-  );
-}
-```
-
-### Pattern 1b: Basic Document (Static Pagination)
-
-Using CSS-based pagination (simpler, no printCssRaw needed):
+For a single fixed page, use `Static.Pagination` and `Static.Sheet`:
 
 ```tsx
 import { Static } from 'uhuu-components';
-const { Pagination } = Static;
 
-function App() {
-  const [payload, setPayload] = useState($uhuu.payload());
-  $uhuu.listen('payload', setPayload);
+const { Pagination, Sheet } = Static;
+
+export function App() {
+  const payload = $uhuu.payload() || sampleData;
 
   return (
-    <Pagination setup={{ format: "A4", bleed: 3 }}>
-      <MyPage data={payload} />
+    <Pagination setup={{ format: 'A4', bleed: 3 }}>
+      <Sheet pageNo={1}>
+        <MyPage payload={payload} />
+      </Sheet>
     </Pagination>
   );
 }
 ```
 
-### Pattern 2: Multi-Page Document
-
-Document with multiple page types:
+For editable multi-page documents or flow pagination, prefer `EditorShell.PageEditor`:
 
 ```tsx
 import { EditorShell } from 'uhuu-components';
 
-const pageGroups = EditorShell.buildPageGroupsConfig([
-  {
-    id: 'cover',
-    label: 'Cover',
-    pages: [{ component: CoverPage, sheetType: 'cover' }]
+const { InteractiveModeProvider, TemplateDataProvider, PageEditor } = EditorShell;
+
+const templateConfig = {
+  pages: {
+    cover: { label: 'Cover', component: CoverPage },
+    content: { label: 'Content', component: ContentFlowPage, hasFlow: true },
   },
-  {
-    id: 'content',
-    label: 'Content',
-    pages: [
-      { component: Page1, sheetType: 'text' },
-      { component: Page2, sheetType: 'text' }
-    ]
-  }
-]);
+  initial: ['cover', 'content'],
+};
 
-<EditorShell.PageEditor
-  pageGroups={pageGroups}
-  pageFormat={{ width: 210, height: 297, bleed: 3 }}
-/>
-```
-
-### Pattern 3: Conditional Pages
-
-Show different pages based on payload:
-
-```tsx
-function App() {
-  const payload = $uhuu.payload();
-
+export function Template({ payload, onPayloadChange }) {
   return (
-    <Pagination setup={{ format: "A4", bleed: 3, printCssRaw }}>
-      <CoverPage data={payload} />
-      {payload.showIntro && <IntroPage data={payload} />}
-      <ContentPage data={payload} />
-      {payload.showAppendix && <AppendixPage data={payload} />}
-    </Pagination>
+    <InteractiveModeProvider defaultInteractive enableDevTools={import.meta.env.DEV}>
+      <TemplateDataProvider payload={payload} onPayloadChange={onPayloadChange}>
+        <PageEditor
+          templateConfig={templateConfig}
+          pageFormat={{ format: 'A4', bleed: 3 }}
+          renderOverlay={() => null}
+        />
+      </TemplateDataProvider>
+    </InteractiveModeProvider>
   );
 }
 ```
 
+## Flow Pagination
+
+Flow pagination replaces the old Paged.js path for variable-length template content. It paginates explicit items inside a fixed page design and creates render-only continuation pages through `PageEditor`.
+
+For document bodies such as markdown, Notion, and CMS rich text, prefer the HTML path: convert the body to an HTML string and render it with `Static.FlowDocument`. Use `Static.markdownToFlowItems` only when markdown blocks must stay as live React-rendered blocks with per-block handlers. Use low-level `Static.Flow` for structured rows, product cards, listings, and other item arrays.
+
+Use `Static.FlowPage` for common header/body/footer pages:
+
+```tsx
+import { Static } from 'uhuu-components';
+
+function ContentFlowPage({ payload, pageNum, totalPages }) {
+  const rows = payload.rows ?? [];
+
+  return (
+    <Static.FlowPage
+      className="bg-white p-[16mm] text-[11px]"
+      flowAreaClassName="mt-[6mm]"
+      header={<Header />}
+      footer={<Footer pageNum={pageNum} totalPages={totalPages} />}
+    >
+      <Static.Flow
+        id="content-rows"
+        items={rows}
+        getKey={(row) => row.id}
+        metaDefaults={{
+          heading: { keepWithNext: 1 },
+          row: { avoidBreakInside: true },
+        }}
+        getItemMeta={(row) => ({
+          breakBefore: row.breakBefore,
+        })}
+        renderItem={(row) => <Row row={row} />}
+      />
+    </Static.FlowPage>
+  );
+}
+```
+
+Rules for reliable flow templates:
+
+- Add `hasFlow: true` to every `templateConfig.pages` entry that contains `Static.Flow`.
+- Give every flow item a stable key from payload data, not a random value.
+- Split markdown, Notion, tables, and long sections into block or row items before rendering.
+- Use `keepWithNext` for headings and `avoidBreakInside` for rows/cards that should move as a unit.
+- Keep the flow area measurable. `Static.FlowPage` already provides the required constrained layout.
+
+CSS multi-column markdown is not supported by the v1 flow algorithm. Flow splits one explicit item stream into pages; it does not fragment a paragraph, table, or column layout line by line.
+
+## Template Validation Checklist
+
+Before deploying a template, verify:
+
+- `npm run build` completes without errors.
+- `npm run dev` works with sample data.
+- `npm run uhuu` runs without console errors.
+- Pages have correct margins and bleed.
+- Flow pages create continuation pages when sample content is long.
+- Page numbers and totals are correct after flow expansion.
+- Editable fields work in Uhuu mode.
+- Payload updates are reflected in preview.
+
+## Common Patterns
+
+### Fixed Multi-Page Document
+
+Use `Static.Pagination` and one `Static.Sheet` per authored page:
+
+```tsx
+<Pagination setup={{ format: 'A4' }}>
+  <Sheet pageNo={1}><CoverPage payload={payload} /></Sheet>
+  <Sheet pageNo={2}><DetailsPage payload={payload} /></Sheet>
+</Pagination>
+```
+
+### Hybrid PageEditor Document
+
+Mix authored pages and flow pages in one editor-controlled document:
+
+```tsx
+const templateConfig = {
+  pages: {
+    cover: { label: 'Cover', component: CoverPage },
+    features: { label: 'Features', component: FeaturesFlowPage, hasFlow: true },
+    contact: { label: 'Contact', component: ContactPage },
+  },
+  initial: ['cover', 'features', 'contact'],
+};
+```
+
+The `features` page can expand into several render pages, while `cover` and `contact` remain one authored page each.
+
+### Conditional Page Lists
+
+Use a `pageComponentKeys` function when page order depends on payload:
+
+```tsx
+const templateConfig = {
+  pages: {
+    cover: { label: 'Cover', component: CoverPage },
+    appendix: { label: 'Appendix', component: AppendixPage },
+  },
+  groups: {
+    document: {
+      label: 'Document',
+      pageComponentKeys: ({ payload }) => (
+        payload.showAppendix ? ['cover', 'appendix'] : ['cover']
+      ),
+    },
+  },
+};
+```
+
 ## Common Gotchas
 
-### 1. "does not provide an export named default"
+### Flow Content Does Not Split
 
-**Symptom**: Build works but runtime error in browser
-**Cause**: CJS/ESM mismatch in dependencies
-**Solution**:
+Flow moves whole items. If a markdown paragraph, table, image, or Notion block is taller than the available page area, split it into smaller flow items.
+
+### Flow Page Does Not Expand
+
+Make sure the page config has `hasFlow: true` and the page is rendered through `EditorShell.PageEditor`. A `Static.Flow` rendered outside PageEditor will render its first item set but cannot create measured continuation pages.
+
+### No Page Margins
+
+Static templates do not use `@page` margin boxes. Put margins and headers/footers in React layout with padding, `Static.FlowPage`, or page components.
+
+### Images Overflow
+
+Give images stable dimensions before measurement. For bleed images, use `ImageBlock` and configure the bleed/crop behavior explicitly.
+
+### Components Do Not Resolve
+
+Do not exclude `uhuu-components` from Vite dependency optimization:
+
 ```js
-// vite.config.mjs - DO NOT do this:
+// vite.config.mjs - do not add this
 optimizeDeps: {
-  exclude: ['uhuu-components'] // ❌ Don't exclude
+  exclude: ['uhuu-components']
 }
-
-// Instead, use default config (zero-config)
 ```
 
-### 2. No Page Margins
+## Legacy Note
 
-**Symptom**: Content touches page edges
-**Cause**: Missing margin in print.css
-**Solution**: Add `margin: 12mm` to `@page` rule
-
-### 3. Images Overflow
-
-**Symptom**: Images extend beyond page bounds
-**Cause**: Not accounting for bleed
-**Solution**: Use `ImageBlock` component and set bleed
-
-### 4. Changes Don't Show in Uhuu App
-
-**Symptom**: Template changes not reflected
-**Cause**: Cached build output
-**Solution**:
-```bash
-cd uhuu-storybook
-npm run build  # Rebuild components first
-```
-
-### 5. Dev Warning: "Auto-generating basic @page CSS"
-
-**Symptom**: Console info message about printCssRaw
-**Cause**: Not providing printCssRaw in setup
-**Solution**:
-```tsx
-import printCssRaw from './styles/print.css?raw';
-<Pagination setup={{ ..., printCssRaw }} />
-```
+The old `Dynamic` / Paged.js API was removed from current `uhuu-components`. Older projects can be referenced in `/Users/guvenergokce/gdev/uhuu/uhuu-templates/uhuu-storybook-pagedjs`, but new and migrated templates should use `Static`, `Static.Flow`, and `EditorShell.PageEditor`.
 
 ## Page Size Reference
 
-Common page formats and dimensions:
+| Format | Width x Height (mm) | Common Use |
+|--------|---------------------|------------|
+| A4 | 210 x 297 | Standard documents |
+| A3 | 297 x 420 | Posters, large docs |
+| A5 | 148 x 210 | Booklets, flyers |
+| LETTER | 216 x 279 | US standard |
+| LEGAL | 216 x 356 | US legal docs |
+| TABLOID | 279 x 432 | Newsletters |
 
-| Format | Width × Height (mm) | Common Use |
-|--------|-------------------|------------|
-| A4 | 210 × 297 | Standard documents |
-| A3 | 297 × 420 | Posters, large docs |
-| A5 | 148 × 210 | Booklets, flyers |
-| LETTER | 216 × 279 | US standard |
-| LEGAL | 216 × 356 | US legal docs |
-| TABLOID | 279 × 432 | Newsletters |
+Bleed guidelines:
 
-### Bleed Guidelines
-
-- **No bleed**: 0mm (digital-only)
-- **Standard bleed**: 3mm (most print)
-- **Large format**: 5mm (posters)
-
-## Documentation Requirements
-
-Each template should include:
-
-### README.md
-```markdown
-# Template Name
-
-## Purpose
-Brief description of what this template generates
-
-## Payload Schema
-```json
-{
-  "field1": "string",
-  "field2": 123
-}
-```
-
-## Setup
-- Format: A4
-- Bleed: 3mm
-- Features: page numbers, headers, etc.
-```
-
-### sample_data.json
-Realistic example payload for development:
-```json
-{
-  "title": "Example Document",
-  "date": "2026-02-13",
-  "items": [...]
-}
-```
-
-## Deployment Checklist
-
-Before submitting template:
-
-- [ ] All files present (App.tsx, print.css, etc.)
-- [ ] Dependencies listed in package.json
-- [ ] README documents payload schema
-- [ ] sample_data.json has realistic data
-- [ ] Build completes successfully
-- [ ] No console errors in uhuu mode
-- [ ] Print preview looks correct
-- [ ] Page margins are visible
-- [ ] Images handle bleed correctly
-
-## Getting Help
-
-- Check examples in `uhuu-starter/examples/`
-- Read component docs in `uhuu-storybook/AGENTS.md`
-- Review existing templates for patterns
-
-## Advanced Topics
-
-### Custom Page Filtering
-
-For separate cover/text PDFs:
-
-```tsx
-<EditorShell.PageEditor
-  pageFilter={{ mode: 'cover', coverPageCount: 2 }}
-  pageFormat={{ bleed: 3 }}
-/>
-```
-
-Modes:
-- `all`: All pages (default)
-- `cover`: First N + last N pages
-- `text`: Inner pages only
-- `custom`: Specific ranges
-
-### Template Data Provider
-
-For complex data binding:
-
-```tsx
-<EditorShell.TemplateDataProvider
-  data={payload}
-  onUpdate={handleUpdate}
->
-  <EditorShell.PageEditor ... />
-</EditorShell.TemplateDataProvider>
-```
-
-### Development Print Controls
-
-For testing print modes:
-
-```tsx
-const PRINT_CONFIGS = {
-  preview: { label: 'Preview', filter: { mode: 'all' } },
-  cover: { label: 'Cover', filter: { mode: 'cover' }, pageFormat: { bleed: 3 } },
-  text: { label: 'Text', filter: { mode: 'text' }, pageFormat: { bleed: 3 } }
-};
-
-<EditorShell.PageEditor printConfigs={PRINT_CONFIGS} />
-```
-
----
-
-**Last Updated**: 2026-02-13
-**Version**: 1.0
+- `0mm`: digital-only documents.
+- `3mm`: standard print bleed.
+- `5mm`: large-format print bleed.

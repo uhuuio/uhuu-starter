@@ -14,6 +14,17 @@
   --notion-divider: rgba(55, 53, 47, 0.09);
 }
 
+.markdown-body .rnr-notion-content .notion-document-logo {
+  display: flex;
+  align-items: center;
+  margin-bottom: 44px;
+}
+
+.markdown-body .rnr-notion-content .notion-document-logo img {
+  height: 60px;
+  width: auto;  
+}
+
 /* ----- Page title (main document heading) ----- */
 .markdown-body .notion-page-title {
   margin: 0 0 0.75em 0;
@@ -353,4 +364,3 @@
 .markdown-body .rnr-container .rnr-table_of_contents > li {
   padding: 3px 0;
 }
-

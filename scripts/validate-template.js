@@ -7,26 +7,32 @@
  * Usage: node scripts/validate-template.js [template-path]
  */
 
-import { existsSync, readFileSync } from 'fs';
-import { join, resolve } from 'path';
+const { existsSync, readFileSync, readdirSync, statSync } = require('fs');
+const { join, resolve } = require('path');
 
 const REQUIRED_FILES = [
   'package.json',
   'vite.config.mjs',
-  'src/App.tsx',
   'test/sample_data.json'
 ];
 
 const RECOMMENDED_FILES = [
-  'styles/print.css',
   'README.md'
 ];
 
-const PRINT_CSS_REQUIREMENTS = [
-  '@page',
-  'margin',
-  'page-break'
-];
+function readSourceFiles(directory) {
+  if (!existsSync(directory)) return '';
+
+  return readdirSync(directory).map((entry) => {
+    const filePath = join(directory, entry);
+    const stat = statSync(filePath);
+
+    if (stat.isDirectory()) return readSourceFiles(filePath);
+    if (!/\.(jsx?|tsx?)$/.test(entry)) return '';
+
+    return readFileSync(filePath, 'utf-8');
+  }).join('\n');
+}
 
 function validateTemplate(templatePath) {
   const errors = [];
@@ -45,6 +51,14 @@ function validateTemplate(templatePath) {
     } else {
       info.push(`✓ ${file}`);
     }
+  }
+
+  const appEntries = ['src/App.tsx', 'src/App.jsx'];
+  const appPath = appEntries.map((file) => join(templatePath, file)).find((filePath) => existsSync(filePath));
+  if (!appPath) {
+    errors.push('Missing required file: src/App.tsx or src/App.jsx');
+  } else {
+    info.push(`✓ ${appPath.replace(`${templatePath}/`, '')}`);
   }
 
   // Check recommended files
@@ -85,50 +99,25 @@ function validateTemplate(templatePath) {
     }
   }
 
-  // Validate print.css
-  console.log('\n🎨 Validating print.css...');
-  const printCssPath = join(templatePath, 'styles/print.css');
-  if (existsSync(printCssPath)) {
-    const printCss = readFileSync(printCssPath, 'utf-8');
-
-    for (const requirement of PRINT_CSS_REQUIREMENTS) {
-      if (!printCss.includes(requirement)) {
-        warnings.push(`print.css missing recommended: ${requirement}`);
-      }
-    }
-
-    if (!printCss.includes('margin:') && !printCss.includes('margin ')) {
-      warnings.push('print.css should include page margins (margin: 12mm)');
-    }
-
-    info.push('✓ print.css exists and has basic requirements');
-  } else {
-    warnings.push('Consider adding styles/print.css for better print control');
-  }
-
-  // Validate App.tsx
-  console.log('\n⚛️  Validating App.tsx...');
-  const appPath = join(templatePath, 'src/App.tsx');
-  if (existsSync(appPath)) {
+  // Validate app entry
+  console.log('\n⚛️  Validating app entry...');
+  if (appPath) {
     const appContent = readFileSync(appPath, 'utf-8');
+    const sourceContent = readSourceFiles(join(templatePath, 'src'));
 
-    if (!appContent.includes('uhuu-components')) {
-      warnings.push('App.tsx should import from uhuu-components');
+    if (!sourceContent.includes('uhuu-components')) {
+      warnings.push('Template source should import from uhuu-components');
     }
 
-    if (!appContent.includes('Pagination')) {
-      warnings.push('App.tsx should use Pagination component');
+    if (!sourceContent.includes('PageEditor') && !sourceContent.includes('Pagination')) {
+      warnings.push('Template source should use EditorShell.PageEditor or Static.Pagination');
     }
 
     if (!appContent.includes('$uhuu.payload')) {
-      warnings.push('App.tsx should use $uhuu.payload() for data');
+      warnings.push('App entry should use $uhuu.payload() for data');
     }
 
-    if (!appContent.includes('printCssRaw') && !existsSync(printCssPath)) {
-      warnings.push('App.tsx should provide printCssRaw or create print.css');
-    }
-
-    info.push('✓ App.tsx structure looks good');
+    info.push('✓ App entry structure looks good');
   }
 
   // Validate sample_data.json
@@ -167,7 +156,7 @@ function validateTemplate(templatePath) {
   }
 
   console.log('\n💡 INFO:');
-  console.log(`  • Total files checked: ${REQUIRED_FILES.length + RECOMMENDED_FILES.length}`);
+  console.log(`  • Total files checked: ${REQUIRED_FILES.length + RECOMMENDED_FILES.length + 1}`);
   console.log(`  • Errors: ${errors.length}`);
   console.log(`  • Warnings: ${warnings.length}`);
 

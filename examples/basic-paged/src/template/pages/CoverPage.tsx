@@ -14,7 +14,7 @@ export default function ({ payload }) {
   const { t } = useTranslation();
 
   return (
-      <div className="bg-center page-break-after px-11 relative">
+      <div className="h-full w-full bg-center px-11 relative">
 
             <div className="hidden">Referenz-Nr. {listing.detail.wp_propertyreferencenumber__c} - {dayjs().tz("Europe/Zurich").locale(localeDe).format("MMMM YYYY, H:m")} </div>
 
