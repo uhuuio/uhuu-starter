@@ -4,3 +4,6 @@
 /* Optional tailwind set up */
 @import "tailwindcss";
 
+.uhuu-page-sheet {
+	@apply pt-12;
+}

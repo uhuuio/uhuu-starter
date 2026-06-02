@@ -28,9 +28,16 @@ function hasRenderableContent(element: Element) {
   return text.length > 0 || !!element.querySelector("hr,img,input,table,iframe,video");
 }
 
+function getFlowTokenType(element: Element) {
+  const heading = element.matches("h1,h2,h3,h4,h5,h6")
+    ? element
+    : element.querySelector("h1,h2,h3,h4,h5,h6");
+  return (heading ?? element).tagName.toLowerCase();
+}
+
 function toFlowToken(element: Element) {
   return {
-    type: element.tagName.toLowerCase(),
+    type: getFlowTokenType(element),
     html: element.outerHTML,
     text: element.textContent ?? "",
     breakBefore: element.hasAttribute("data-flow-break-before"),
@@ -50,13 +57,17 @@ function parseNotionHtmlToFlowTokens(html: string) {
 
     const element = node as Element;
     if (element.classList.contains("rnr-container")) {
-      element.childNodes.forEach((childNode) => {
-        if (childNode.nodeType !== Node.ELEMENT_NODE) return;
+      const children = Array.from(element.childNodes).filter(
+        (childNode): childNode is Element =>
+          childNode.nodeType === Node.ELEMENT_NODE &&
+          hasRenderableContent(childNode as Element)
+      );
 
-        const child = childNode as Element;
-        if (!hasRenderableContent(child)) return;
-
+      children.forEach((child, index) => {
         const container = element.cloneNode(false) as Element;
+        container.classList.add("rnr-flow-fragment");
+        if (index === 0) container.classList.add("rnr-flow-fragment-first");
+        if (index === children.length - 1) container.classList.add("rnr-flow-fragment-last");
         container.appendChild(child.cloneNode(true));
         tokens.push({
           ...toFlowToken(child),
@@ -96,20 +107,12 @@ export function NotionPage({
   return (
     <Static.FlowDocument
       html={html}
-      className="bg-white bg-center px-[10mm] py-[10mm] text-sm markdown-body"
+      className="bg-white bg-center px-[12mm] pt-[12mm] pb-[5mm] text-sm markdown-body"
       flowAreaClassName="mt-[5mm]"
       flowClassName="rnr-notion-content markdown-body max-w-3xl mx-auto"
-      metaDefaults={{
-        h1: { keepWithNext: 2 },
-        h2: { keepWithNext: 2 },
-        h3: { keepWithNext: 2 },
-        h4: { keepWithNext: 2 },
-        h5: { keepWithNext: 2 },
-        h6: { keepWithNext: 2 },
-      }}
       parseHtml={parseNotionHtmlToFlowTokens}
       footer={
-        <footer className="mt-5 flex justify-between text-[10px] text-gray-500">
+        <footer className="flex justify-between text-[10px] text-gray-500">
           <span>Uhuu.io</span>
           <span>{pageNum}</span>
         </footer>

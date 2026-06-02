@@ -17,7 +17,7 @@
 .markdown-body .rnr-notion-content .notion-document-logo {
   display: flex;
   align-items: center;
-  margin-bottom: 44px;
+  margin-bottom: 32px;
 }
 
 .markdown-body .rnr-notion-content .notion-document-logo img {
@@ -121,6 +121,24 @@
 
 .markdown-body .rnr-container > *:last-child {
   margin-bottom: 0;
+}
+
+.markdown-body .rnr-flow-fragment > *:last-child {
+  margin-bottom: 12px;
+}
+
+.markdown-body .rnr-flow-fragment.rnr-flow-fragment-last > *:last-child {
+  margin-bottom: 0;
+}
+
+.markdown-body .rnr-flow-fragment > .rnr-heading_1:first-child,
+.markdown-body .rnr-flow-fragment > h1:first-child {
+  margin-top: 1.75em;
+}
+
+.markdown-body .rnr-flow-fragment.rnr-flow-fragment-first > .rnr-heading_1:first-child,
+.markdown-body .rnr-flow-fragment.rnr-flow-fragment-first > h1:first-child {
+  margin-top: 0;
 }
 
 /* ----- Callout: Notion-style (light blue bg, rounded, emoji + text) ----- */
