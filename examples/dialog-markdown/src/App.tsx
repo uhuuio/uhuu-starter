@@ -62,7 +62,7 @@ function App() {
         <PageEditor
           templateConfig={templateConfig}
           pageFormat={{ format: "A4", bleed: 3 }}
-          renderOverlay={() => null}
+          renderOverlay={false}
         />
       </TemplateDataProvider>
     </InteractiveModeProvider>

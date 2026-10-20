@@ -1,6 +1,6 @@
 import { useMemo } from "react";
 import { marked } from "marked";
-import { Editable, Static } from 'uhuu-components';
+import { Editing, Flow } from 'uhuu-components';
 import { HeaderSchema } from './../../test/header_schema';
 
 /**
@@ -8,11 +8,11 @@ import { HeaderSchema } from './../../test/header_schema';
  *
  * Payload Structure:
  * {
- *   "body": string,            // REQUIRED: Markdown content. Converted to HTML and paginated by Static.FlowDocument.
+ *   "body": string,            // REQUIRED: Markdown content. Converted to HTML and paginated by Flow.Document.
  *   "header": string[]         // OPTIONAL: header lines shown top-right. Hidden when empty.
  * }
  *
- * Flow pipeline: Markdown -> HTML (marked) -> Static.FlowDocument. FlowDocument
+ * Flow pipeline: Markdown -> HTML (marked) -> Flow.Document. Flow.Document
  * splits the HTML into block items, applies break metadata, and creates
  * render-only continuation pages. A `<!-- page-break-before -->` comment in the
  * Markdown survives the HTML conversion and forces a page break. The logo and
@@ -41,7 +41,7 @@ export function MarkdownPage({ payload, pageNum, totalPages }) {
   );
 
   return (
-    <Static.FlowDocument
+    <Flow.Document
       html={html}
       className="bg-white bg-center px-[10mm] py-[10mm] text-sm markdown-body"
       flowAreaClassName="mt-[5mm]"
@@ -52,7 +52,7 @@ export function MarkdownPage({ payload, pageNum, totalPages }) {
               <div className="dialog-markdown-document-logo">
                 <img src="https://platform.uhuu.io/common/brand/logos/uhuu_logo.svg" alt="Uhuu" />
               </div>
-              <Editable dialog={{ path: 'header', type: 'schemaform', schema: HeaderSchema }}>
+              <Editing.Editable dialog={{ path: 'header', type: 'schemaform', schema: HeaderSchema }}>
                 {header.length > 0 ? (
                   <div className="dialog-markdown-document-header">
                     {header.map((line, index) => (
@@ -67,18 +67,18 @@ export function MarkdownPage({ payload, pageNum, totalPages }) {
                     Click to add header
                   </div>
                 )}
-              </Editable>
+              </Editing.Editable>
             </div>
           );
         }
 
         return (
-          <Editable dialog={{ path: 'body', type: 'markdown' }}>
+          <Editing.Editable dialog={{ path: 'body', type: 'markdown' }}>
             <div
               className="uhuu-flow-html-block"
               dangerouslySetInnerHTML={{ __html: sanitizeHtml(item.html) }}
             />
-          </Editable>
+          </Editing.Editable>
         );
       }}
       footer={

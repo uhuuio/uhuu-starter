@@ -96,7 +96,7 @@ export function Template({ payload, onPayloadChange }) {
         <PageEditor
           templateConfig={templateConfig}
           pageFormat={{ format: 'A4', bleed: 3 }}
-          renderOverlay={() => null}
+          renderOverlay={false}
         />
       </TemplateDataProvider>
     </InteractiveModeProvider>
@@ -108,24 +108,24 @@ export function Template({ payload, onPayloadChange }) {
 
 Flow pagination replaces the old Paged.js path for variable-length template content. It paginates explicit items inside a fixed page design and creates render-only continuation pages through `PageEditor`.
 
-For document bodies such as markdown, Notion, and CMS rich text, prefer the HTML path: convert the body to an HTML string and render it with `Static.FlowDocument`. Use `Static.markdownToFlowItems` only when markdown blocks must stay as live React-rendered blocks with per-block handlers. Use low-level `Static.Flow` for structured rows, product cards, listings, and other item arrays.
+For document bodies such as markdown, Notion, and CMS rich text, prefer the HTML path: convert the body to an HTML string and render it with `Flow.Document`. Use `Flow.fromMarkdown` only when markdown blocks must stay as live React-rendered blocks with per-block handlers. Use low-level `Flow.Items` for structured rows, product cards, listings, and other item arrays.
 
-Use `Static.FlowPage` for common header/body/footer pages:
+Use `Flow.Page` for common header/body/footer pages:
 
 ```tsx
-import { Static } from 'uhuu-components';
+import { Flow } from 'uhuu-components';
 
 function ContentFlowPage({ payload, pageNum, totalPages }) {
   const rows = payload.rows ?? [];
 
   return (
-    <Static.FlowPage
+    <Flow.Page
       className="bg-white p-[16mm] text-[11px]"
       flowAreaClassName="mt-[6mm]"
       header={<Header />}
       footer={<Footer pageNum={pageNum} totalPages={totalPages} />}
     >
-      <Static.Flow
+      <Flow.Items
         id="content-rows"
         items={rows}
         getKey={(row) => row.id}
@@ -138,20 +138,20 @@ function ContentFlowPage({ payload, pageNum, totalPages }) {
         })}
         renderItem={(row) => <Row row={row} />}
       />
-    </Static.FlowPage>
+    </Flow.Page>
   );
 }
 ```
 
 Rules for reliable flow templates:
 
-- Add `hasFlow: true` to every `templateConfig.pages` entry that contains `Static.Flow`.
+- Add `hasFlow: true` to every `templateConfig.pages` entry that contains `Flow.Items`.
 - Give every flow item a stable key from payload data, not a random value.
 - Split markdown, Notion, tables, and long sections into block or row items before rendering.
 - Use `keepWithNext` for headings and `avoidBreakInside` for rows/cards that should move as a unit.
-- Keep the flow area measurable. `Static.FlowPage` already provides the required constrained layout.
+- Keep the flow area measurable. `Flow.Page` already provides the required constrained layout.
 
-CSS multi-column markdown is not supported by the v1 flow algorithm. Flow splits one explicit item stream into pages; it does not fragment a paragraph, table, or column layout line by line.
+Flow splits one explicit item stream into pages. `Flow.Document` continues a long paragraph or heading between its lines; in your own items, wrap such text in `Flow.Text` (one per item). Tables, lists and other blocks move whole. For column layouts use `Flow.Columns`, which does not split text.
 
 ## Template Validation Checklist
 
@@ -221,15 +221,15 @@ const templateConfig = {
 
 ### Flow Content Does Not Split
 
-Flow moves whole items. If a markdown paragraph, table, image, or Notion block is taller than the available page area, split it into smaller flow items.
+Flow moves whole items, except text wrapped in `Flow.Text` (which `Flow.Document` does for inline-only paragraphs and headings). If a table, image, list or other block is taller than the available page area, split it into smaller flow items.
 
 ### Flow Page Does Not Expand
 
-Make sure the page config has `hasFlow: true` and the page is rendered through `EditorShell.PageEditor`. A `Static.Flow` rendered outside PageEditor will render its first item set but cannot create measured continuation pages.
+Make sure the page config has `hasFlow: true` and the page is rendered through `EditorShell.PageEditor`. A `Flow.Items` rendered outside PageEditor will render its first item set but cannot create measured continuation pages.
 
 ### No Page Margins
 
-Static templates do not use `@page` margin boxes. Put margins and headers/footers in React layout with padding, `Static.FlowPage`, or page components.
+Static templates do not use `@page` margin boxes. Put margins and headers/footers in React layout with padding, `Flow.Page`, or page components.
 
 ### Images Overflow
 
@@ -248,7 +248,7 @@ optimizeDeps: {
 
 ## Legacy Note
 
-The old `Dynamic` / Paged.js API was removed from current `uhuu-components`. Older projects can be referenced in `/Users/guvenergokce/gdev/uhuu/uhuu-templates/uhuu-storybook-pagedjs`, but new and migrated templates should use `Static`, `Static.Flow`, and `EditorShell.PageEditor`.
+The old `Dynamic` / Paged.js API was removed from current `uhuu-components`. Older projects can be referenced in `/Users/guvenergokce/gdev/uhuu/uhuu-templates/uhuu-storybook-pagedjs`, but new and migrated templates should use `Static`, `Flow`, and `EditorShell.PageEditor`.
 
 ## Page Size Reference
 

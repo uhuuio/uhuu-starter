@@ -1,7 +1,7 @@
 import { useMemo } from "react";
 import { renderToStaticMarkup } from "react-dom/server";
 import { Render } from "@9gustin/react-notion-render";
-import { Static } from "uhuu-components";
+import { Flow } from "uhuu-components";
 import { getNotionPageTitle, getNotionBlocksForRender } from "../utility/notionBlocks";
 
 import "@9gustin/react-notion-render/dist/index.css";
@@ -15,7 +15,7 @@ import "@9gustin/react-notion-render/dist/index.css";
  * }
  *
  * Flow pipeline: Notion blocks -> HTML (react-notion-render, serialized once
- * with renderToStaticMarkup) -> Static.FlowDocument. The custom HTML parser
+ * with renderToStaticMarkup) -> Flow.Document. The custom HTML parser
  * keeps the old react-notion-render DOM/CSS shape while exposing child blocks
  * as flow tokens for pagination.
  */
@@ -105,7 +105,7 @@ export function NotionPage({
   }, [payload]);
 
   return (
-    <Static.FlowDocument
+    <Flow.Document
       html={html}
       className="bg-white bg-center px-[12mm] pt-[12mm] pb-[5mm] text-sm markdown-body"
       flowAreaClassName="mt-[5mm]"

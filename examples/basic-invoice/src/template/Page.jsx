@@ -1,5 +1,5 @@
 import React from 'react';
-import { Editable } from 'uhuu-components';
+import { Editing } from 'uhuu-components';
 import { getTheme } from '../themes';
 
 const fmt = (value, currency = 'EUR') =>
@@ -30,7 +30,7 @@ function OrgBlock({ org, label, path, theme }) {
       <div className="text-[9px] font-bold uppercase tracking-widest mb-2" style={{ color: theme.mutedForeground }}>
         {label}
       </div>
-      <Editable dialog={{ path }}>
+      <Editing.Editable dialog={{ path }}>
         <div className="font-semibold">{org.name}</div>
         {org.legalName && org.legalName !== org.name && (
           <div style={{ color: theme.mutedForeground }}>{org.legalName}</div>
@@ -45,7 +45,7 @@ function OrgBlock({ org, label, path, theme }) {
         )}
         {org.email && <div>{org.email}</div>}
         {org.telephone && <div>{org.telephone}</div>}
-      </Editable>
+      </Editing.Editable>
     </div>
   );
 }
@@ -102,9 +102,9 @@ export function InvoicePage({ payload, pagePayload }) {
           <div className="text-3xl font-bold tracking-widest uppercase" style={{ color: theme.primary }}>
             Invoice
           </div>
-          <Editable dialog={{ path: 'invoice.invoiceNumber' }}>
+          <Editing.Editable dialog={{ path: 'invoice.invoiceNumber' }}>
             <div className="text-sm font-semibold">{invoiceNumber}</div>
-          </Editable>
+          </Editing.Editable>
           {purchaseOrderNumber && (
             <div style={{ color: theme.mutedForeground }}>PO: {purchaseOrderNumber}</div>
           )}
@@ -229,9 +229,9 @@ export function InvoicePage({ payload, pagePayload }) {
 
       {/* ── Notes ────────────────────────────────────────────────── */}
       {notes && (
-        <Editable dialog={{ path: 'invoice.notes' }}>
+        <Editing.Editable dialog={{ path: 'invoice.notes' }}>
           <div style={{ color: theme.mutedForeground }}>{notes}</div>
-        </Editable>
+        </Editing.Editable>
       )}
     </div>
   );

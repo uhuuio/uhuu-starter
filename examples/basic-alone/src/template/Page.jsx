@@ -1,17 +1,17 @@
 import React from 'react';
-import { ImageBlock, Editable } from 'uhuu-components';
+import { ImageBlock, Editing } from 'uhuu-components';
 
 export function Page({payload}) {  
   const { title, message, url } = payload
   return (
     <div className="p-6 mx-6">
-      <Editable dialog={{ path: 'title' }}>
+      <Editing.Editable dialog={{ path: 'title' }}>
         <div className="font-bold text-4xl mt-9">{title}</div>
-      </Editable>
+      </Editing.Editable>
 
-      <Editable dialog={{ path: 'message', rows: 5, panelSize: '3xl' }}>
+      <Editing.Editable dialog={{ path: 'message', rows: 5, panelSize: '3xl' }}>
         <div className="text-base mt-9">{message}</div>
-      </Editable>
+      </Editing.Editable>
 
       <ImageBlock
         mode="bleed"

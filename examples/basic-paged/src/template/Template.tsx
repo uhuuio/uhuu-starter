@@ -26,7 +26,7 @@ export function Template({ payload, onPayloadChange }) {
                 <PageEditor
                     templateConfig={templateConfig}
                     pageFormat={{ format: "A4" }}
-                    renderOverlay={() => null}
+                    renderOverlay={false}
                 />
             </TemplateDataProvider>
         </InteractiveModeProvider>

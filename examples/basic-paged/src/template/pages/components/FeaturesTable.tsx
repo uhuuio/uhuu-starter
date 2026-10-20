@@ -1,6 +1,6 @@
 import currency from 'currency.js';
 import { useTranslation } from 'react-i18next';
-import { Static } from 'uhuu-components';
+import { Flow } from 'uhuu-components';
 import AgentInfo from './AgentInfo';
 
 export default function ({ payload }) {
@@ -78,7 +78,7 @@ export default function ({ payload }) {
 
   return (
 
-      <Static.Flow
+      <Flow.Items
         id="property-features"
         items={items}
         getKey={(item) => item.id}

@@ -15,7 +15,7 @@
 - Example: Initialize header only if `payload.header === undefined`, not if it's `[]`.
 
 ## Editable Component Patterns
-- Use `Editable` from `uhuu-components` to make content editable via dialogs.
+- Use `Editing.Editable` from `uhuu-components` to make content editable via dialogs.
 - Dialog types:
   - `type: 'markdown'` - for markdown content editing (e.g., `dialog={{ path: 'body', type: 'markdown' }}`)
   - `type: 'schemaform'` - for structured data editing with JSON Schema (e.g., `dialog={{ path: 'header', type: 'schemaform', schema: HeaderSchema }}`)
